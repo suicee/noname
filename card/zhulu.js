@@ -384,6 +384,7 @@ game.import("card", function () {
 						return 4;
 					},
 					equipValue: function (card, player) {
+						if (card.constructor.name == "VCard" && card?.cards?.[0]) card = card.cards[0];
 						if (get.position(card) == "e") return 0;
 						return -get.value(player.getCards("e"));
 					},
@@ -455,6 +456,7 @@ game.import("card", function () {
 				ai: {
 					order: 9,
 					equipValue: function (card, player) {
+						if (card.constructor.name == "VCard" && card?.cards?.[0]) card = card.cards[0];
 						if (get.position(card) == "e") return -2;
 						return 2;
 					},
@@ -496,6 +498,7 @@ game.import("card", function () {
 				ai: {
 					order: 9,
 					equipValue: function (card, player) {
+						if (card.constructor.name == "VCard" && card?.cards?.[0]) card = card.cards[0];
 						if (get.position(card) == "e") return -2;
 						return 2;
 					},
@@ -534,6 +537,7 @@ game.import("card", function () {
 				ai: {
 					order: 9,
 					equipValue: function (card, player) {
+						if (card.constructor.name == "VCard" && card?.cards?.[0]) card = card.cards[0];
 						if (get.position(card) == "e") return -7;
 						return 1;
 					},
@@ -604,6 +608,7 @@ game.import("card", function () {
 				ai:{
 					order: 9.5,
 					equipValue: function (card, player) {
+						if (card.constructor.name == "VCard" && card?.cards?.[0]) card = card.cards[0];
 						if (get.position(card) == "e") return 0;
 						return 1;
 					},
