@@ -11706,6 +11706,9 @@ const skills = {
 				target(card, player, target) {
 					if (name == "lebu" || name == "bingliang") return [target.hasSkillTag("rejudge") ? 0.4 : 1, 2, target.hasSkillTag("rejudge") ? 0.4 : 1, 0];
 				},
+				target_use(card, player, target, current) {
+					if (get.type(card) == "delay") return [target.hasSkillTag("rejudge") ? 0.4 : 1, 2, target.hasSkillTag("rejudge") ? 0.4 : 1, 0];
+				}
 			},
 		},
 	},
