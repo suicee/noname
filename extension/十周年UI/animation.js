@@ -1367,22 +1367,14 @@ if (decadeModule) decadeModule.import(function (lib, game, ui, get, ai, _status)
 				card: {
 					nvzhuang: {
 						onEquip: function () {
-							if (
-								player.sex == "male" &&
-								player.countCards("he", function (cardx) {
-									return card.cards && !card.cards.includes(cardx);
-								})
-							)
+							if (player.sex == "male" && player.countCards("he", function (cardx) {
+								return card.cards && !card.cards.includes(cardx);
+							})) {
 								lib.animate.skill['nvzhuang'].call(player, 'nvzhuang');
-								player
-									.chooseToDiscard(
-										true,
-										function (card) {
-											return !_status.event.card?.cards.includes(card);
-										},
-										"he"
-									)
-									.set("card", card);
+								player.chooseToDiscard(true, function (card) {
+									return !_status.event.card?.cards.includes(card);
+								}, "he").set("card", card);
+							}
 						},
 						onLose: function () {
 							if (player.sex != 'male') return;
