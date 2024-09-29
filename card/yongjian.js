@@ -557,7 +557,7 @@ game.import("card", function () {
 				forced: true,
 				equipSkill: true,
 				filter(event, player){
-					if(event.card.name!="qixingbaodao") return false;
+					if (event.card?.name!="qixingbaodao") return false;
 					return event.card?.cards.length > 0 && player.hasCard(card => {
 						return !event.card.cards.includes(card) && lib.filter.cardDiscardable(card, player, "qixingbaodao");
 					}, "ej");
