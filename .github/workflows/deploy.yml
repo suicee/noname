@@ -15,7 +15,7 @@ on:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -33,6 +33,36 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout the PWA tool repo
+        uses: actions/checkout@v4
+        with:
+          repository: RainEggplant/noname-pwa
+          submodules: false
+      - name: Checkout current repo
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git clone ${{ github.server_url }}/${{ github.repository }}.git noname
+          cd noname
+      - uses: actions/setup-node@v4
+        with:
+          cache: 'yarn'
+      - name: Generate new `sw.js` for pwa
+        run: |
+          yarn install --frozen-lockfile --immutable
+          node ./node_modules/gulp/bin/gulp.js build
+          cd noname
+          git add .
+          if [ -n "$(git status --porcelain)" ]; then
+            git commit -m "Update sw.js"
+          fi
+      - name: Push to origin
+        run: |
+          cd noname
+          origin_url=$(echo ${{ github.server_url }} | sed "s/https:\/\//https:\/\/${{ github.repository_owner }}:${{ github.token }}@/")
+          origin_url=$origin_url/${{ github.repository }}.git
+          git remote set-url origin ${origin_url}
+          git push origin master
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup Pages
