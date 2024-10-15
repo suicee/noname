@@ -911,8 +911,8 @@ export class Player extends HTMLDivElement {
 	getGiftAIResultTarget(card, target) {
 		if (!card || target.refuseGifts(card, this)) return 0;
 		if (get.type(card, null, target) == "equip"){
-			var target_equip_cards=target.getEquips(get.equiptype(card));
-			for (var target_equip_card of target_equip_cards){
+			var target_equip_cards=target.getEquips(get.equipNum(card));
+			for (let target_equip_card of target_equip_cards){
 				if (target_equip_card){
 					if (get.equipValue(target_equip_card)<=0&&get.equipValue(card)<=0) return 0;
 					if (get.equipValue(target_equip_card)>0&&get.equipValue(card)<=0) return -1+get.equipValue(card);
@@ -11081,7 +11081,9 @@ export class Player extends HTMLDivElement {
 		}
 		const cardx = isViewAsCard ? game.createCard(card.name, cards.length == 1 ? get.suit(cards[0]) : "none", cards.length == 1 ? get.number(cards[0]) : 0) : cards[0];
 		cardx.fix();
-		cardx.card = card;
+		const cardSymbol = Symbol("card");
+		cardx.cardSymbol = cardSymbol;
+		cardx[cardSymbol] = card;
 		if (card.subtypes) cardx.subtypes = card.subtypes;
 		cardx.style.transform = "";
 		cardx.classList.remove("drawinghidden");
