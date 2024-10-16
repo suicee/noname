@@ -4453,7 +4453,13 @@ export default () => {
 						break;
 					case "commoner":
 						switch (identity2) {
-							case 'zhu':case 'zhong':case 'mingzhong':
+							case 'zhu':
+								if (get.population('fan')==0&&get.population('nei')>0&&!nei_or_commoner_fan_mark){
+									if (get.population('zhong')+get.population('mingzhong')==0) return -3;
+									return 0;
+								}
+								return situation;
+							case 'zhong':case 'mingzhong':
 								if (get.population('fan')==0&&get.population('nei')>0&&!nei_or_commoner_fan_mark){
 									if (get.population('zhong')+get.population('mingzhong')==0) return -3;
 									return to.hp==max_hp_exclude_zhu_and_self?-(to.countCards('h')+to.countCards('e')*1.5+to.hp*2):0;
