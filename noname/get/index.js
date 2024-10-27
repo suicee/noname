@@ -2850,7 +2850,10 @@ export class Get extends GetCompatible {
 	strNumber(num, forced) {
 		if (typeof num !== "number") return;
 		let result = lib.numstrList.get(num);
-		if (result === undefined && forced) result = num.toString();
+		if (result === undefined) {
+			if (forced) result = num.toString();
+			result = num;
+		}
 		return result;
 	}
 	/**
