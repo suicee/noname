@@ -5734,7 +5734,7 @@ export class Game extends GameCompatible {
 			game.saveConfig("pagecfg" + window.isNonameServer, [lib.configOL, game.roomId, _status.onlinenickname, _status.onlineavatar]);
 			game.reload();
 		} else if (_status.connectMode && !game.online) {
-			setTimeout(game.reload, 15000);
+			setTimeout(game.reload, 600000);
 		}
 	}
 	/**

@@ -185,21 +185,6 @@ game.import('extension', async function(lib, game, ui, get, ai, _status){
 					};
 
 					var Game = (function(Game){
-						Game.phaseLoop = function (player) {
-							game.broadcastAll(function(firstAction){
-								var cur;
-								for (var i = 0; i < game.players.length; i++) {
-									cur = game.players[i];
-									if (!cur.node.seat)
-									cur.node.seat = decadeUI.element.create('seat', cur);
-
-									cur.seat = cur.getSeatNum();
-									cur.node.seat.innerHTML = get.cnNumber(cur.seat, true);
-								}
-							}, player);
-
-							return this._super.phaseLoop.apply(this, arguments);
-						};
 						Game.swapSeat = function(player1,player2,prompt,behind,noanimate){
 							base.game.swapSeat.apply(this,arguments);
 							player1.seat = player1.getSeatNum();
@@ -1969,6 +1954,17 @@ game.import('extension', async function(lib, game, ui, get, ai, _status){
 						}
 						setSeatNum() {
 							super.setSeatNum(...arguments);
+							game.broadcastAll(function(firstAction){
+								let cur;
+								for (var i = 0; i < game.players.length; i++) {
+									cur = game.players[i];
+									if (!cur.node.seat)
+									cur.node.seat = decadeUI.element.create('seat', cur);
+
+									cur.seat = cur.getSeatNum();
+									cur.node.seat.innerHTML = get.cnNumber(cur.seat, true);
+								}
+							}, this);
 							this.seat = this.getSeatNum();
 							this.node.seat.innerHTML = get.cnNumber(this.seat, true);
 						}
@@ -2464,6 +2460,11 @@ game.import('extension', async function(lib, game, ui, get, ai, _status){
 							player.$throwordered2(card1.copy(false));
 						}
 						$throw(cards, time, record, nosource) {
+							if (_status.connectMode) {
+								super.$throw(...arguments)
+								return;
+							}
+
 							var itemtype;
 							var duiMod = (cards.duiMod && game.me == this && !nosource);
 							if (typeof cards == 'number') {
@@ -2875,37 +2876,6 @@ game.import('extension', async function(lib, game, ui, get, ai, _status){
 						}
 						$dieflip() {
 							if (!decadeUI.config.playerDieEffect) super.$dieflip(...arguments);
-						}
-						$dieAfter() {
-							this.stopDynamic();
-
-							if (!decadeUI.config.playerDieEffect) {
-								if (super.$dieAfter) super.$dieAfter(...arguments);
-								return;
-							}
-
-							if (!this.node.dieidentity) this.node.dieidentity = ui.create.div('died-identity', this);
-							this.node.dieidentity.classList.add('died-identity');
-
-							var that = this;
-							var image = new Image();
-							var identity = decadeUI.getPlayerIdentity(this);
-							var url = decadeUIPath + 'image/decoration/dead_' + identity + '.png';
-							image.onerror = function () {
-								that.node.dieidentity.innerHTML = decadeUI.getPlayerIdentity(that, that.identity, true) + '<br>阵亡';
-							};
-
-							that.node.dieidentity.innerHTML = '';
-							that.node.dieidentity.style.backgroundImage = 'url("' + url + '")';
-							image.src = url;
-							setTimeout(function () {
-								var rect = that.getBoundingClientRect();
-								decadeUI.animation.playSpine('effect_zhenwang', {
-									x: rect.left + rect.width / 2 - 7,
-									y: decadeUI.get.bodySize().height - rect.top - rect.height / 2 + 1,
-									scale: 0.8,
-								});
-							}, 250);
 						}
 						setModeState(info) {
 							if (info && info.seat) {

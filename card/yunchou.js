@@ -45,6 +45,15 @@ game.import("card", function () {
 					dialog.videoId = lib.status.videoId++;
 					game.addVideo("cardDialog", null, ["调兵遣将", get.cardsInfo(cards), dialog.videoId]);
 					event.getParent().preResult = dialog.videoId;
+					game.broadcast(
+						function (cards, id) {
+							var dialog = ui.create.dialog("调兵遣将", cards, true);
+							_status.dieClose.push(dialog);
+							dialog.videoId = id;
+						},
+						cards,
+						dialog.videoId
+					);
 				},
 				content: function () {
 					"step 0";
@@ -144,6 +153,13 @@ game.import("card", function () {
 					var dialog = event.dialog;
 					dialog.close();
 					_status.dieClose.remove(dialog);
+					game.broadcast(function (id) {
+						var dialog = get.idDialog(id);
+						if (dialog) {
+							dialog.close();
+							_status.dieClose.remove(dialog);
+						}
+					}, event.preResult);
 					game.addVideo("cardDialog", null, event.preResult);
 				},
 				ai: {

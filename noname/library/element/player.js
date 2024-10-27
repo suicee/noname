@@ -11651,6 +11651,35 @@ export class Player extends HTMLDivElement {
 		}
 		if (this.$dieAfter) {
 			this.$dieAfter();
+			
+			if (window.decadeUI) {
+				this.stopDynamic();
+				
+				if (decadeUI.config.playerDieEffect) {
+					if (!this.node.dieidentity) this.node.dieidentity = ui.create.div('died-identity', this);
+					this.node.dieidentity.classList.add('died-identity');
+
+					var that = this;
+					var image = new Image();
+					var identity = decadeUI.getPlayerIdentity(this);
+					var url = decadeUIPath + 'image/decoration/dead_' + identity + '.png';
+					image.onerror = function () {
+						that.node.dieidentity.innerHTML = decadeUI.getPlayerIdentity(that, that.identity, true) + '<br>阵亡';
+					};
+
+					that.node.dieidentity.innerHTML = '';
+					that.node.dieidentity.style.backgroundImage = 'url("' + url + '")';
+					image.src = url;
+					setTimeout(function () {
+						var rect = that.getBoundingClientRect();
+						decadeUI.animation.playSpine('effect_zhenwang', {
+							x: rect.left + rect.width / 2 - 7,
+							y: decadeUI.get.bodySize().height - rect.top - rect.height / 2 + 1,
+							scale: 0.8,
+						});
+					}, 250);
+				}
+			}
 		}
 	}
 	$dieflip(type) {
