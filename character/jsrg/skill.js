@@ -11231,7 +11231,7 @@ const skills = {
 						} else break;
 					} else break;
 				}
-			} else if (numx < num) {
+			} else {
 				await player.drawTo(num);
 				player.addTempSkill("jsrgcuibing_keji");
 			}

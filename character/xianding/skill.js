@@ -4751,22 +4751,7 @@ const skills = {
 			trigger.targets = [player, ...trigger.targets.remove(player)];
 			evtx.targets = [player, ...evtx.targets.remove(player)];
 			evtx.triggeredTargets4 = [player, ...evtx.triggeredTargets4.remove(player)];
-			player
-				.when({
-					global: "eventNeutralized",
-					target: ["useCardToBegin", "useCardToExcluded", "useCardToIgnored"],
-				})
-				.filter((evt, _, name) => {
-					if (evt.getParent().targets.length <= 1) return false;
-					if (name === "evtNeutralized") {
-						if (evt._neutralize_event.type != "card" || evt.type != "card") return false;
-						return evt._neutralize_event.card === trigger.card;
-					}
-					return evt.getParent() == trigger.getParent();
-				})
-				.then(() => {
-					player.draw(trigger.getParent().targets.length - 1);
-				});
+			await player.draw(evtx.targets.length - 1);
 		},
 	},
 	dczengou: {

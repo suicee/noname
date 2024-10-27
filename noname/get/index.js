@@ -2777,10 +2777,7 @@ export class Get extends GetCompatible {
 					}
 				}
 				if ((str.suit && str.number) || str.isCard) {
-					var cardnum = get.number(str, false) || "";
-					if ([1, 11, 12, 13].includes(cardnum)) {
-						cardnum = { 1: "A", 11: "J", 12: "Q", 13: "K" }[cardnum];
-					}
+					var cardnum = get.strNumber(get.number(str, false), true) || "";
 					if (arg == "viewAs" && str.viewAs != str.name && str.viewAs) {
 						str2 += "（" + get.translation(str) + "）";
 					} else {
@@ -2847,40 +2844,29 @@ export class Get extends GetCompatible {
 	/**
 	 * 返回数字在扑克牌中的表示形式
 	 * @param { number } num
+	 * @param { boolean } [forced] 未获取点数字母对应元素时是否返回字符串格式
 	 * @returns { string }
 	 */
-	strNumber(num) {
-		switch (num) {
-			case 1:
-				return "A";
-			case 11:
-				return "J";
-			case 12:
-				return "Q";
-			case 13:
-				return "K";
-			default:
-				return num.toString();
-		}
+	strNumber(num, forced) {
+		if (typeof num !== "number") return;
+		let result = lib.numstrList.get(num);
+		if (result === undefined && forced) result = num.toString();
+		return result;
 	}
 	/**
 	 * 返回扑克牌中的表示形式对应的数字
 	 * @param { string } str
+	 * @param { boolean } [forced] 未获取字母点数对应元素时是否返回数字格式
 	 * @returns { number }
 	 */
-	numString(str) {
-		switch (str) {
-			case "A":
-				return 1;
-			case "J":
-				return 11;
-			case "Q":
-				return 12;
-			case "K":
-				return 13;
-			default:
-				return parseInt(str);
-		}
+	numString(str, forced) {
+		if (typeof str !== "string") return;
+		let result = lib.numstrList.entries().reduce((map, list) => {
+			map[list[1]] = list[0];
+			return map;
+		}, {})[str];
+		if (result === undefined && forced) result = parseInt(str);
+		return result;
 	}
 	/**
 	 * 将阿拉伯数字转换为中文的表达形式
