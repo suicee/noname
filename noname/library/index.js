@@ -4166,7 +4166,7 @@ export class Library {
 				},
 				show_tip: {
 					name: "显示tip标记",
-					init: false,
+					init: true,
 					unfrequent: true,
 					onclick(bool) {
 						game.saveConfig("show_tip", bool);

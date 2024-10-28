@@ -2844,22 +2844,19 @@ export class Get extends GetCompatible {
 	/**
 	 * 返回数字在扑克牌中的表示形式
 	 * @param { number } num
-	 * @param { boolean } [forced] 未获取点数字母对应元素时是否返回字符串格式
+	 * @param { boolean } [forced] 未获取点数字母对应元素时，若此参数不为false，则返回字符串格式
 	 * @returns { string }
 	 */
 	strNumber(num, forced) {
 		if (typeof num !== "number") return;
 		let result = lib.numstrList.get(num);
-		if (result === undefined) {
-			if (forced) result = num.toString();
-			result = num;
-		}
+		if (result === undefined && forced !== false) result = num.toString();
 		return result;
 	}
 	/**
 	 * 返回扑克牌中的表示形式对应的数字
 	 * @param { string } str
-	 * @param { boolean } [forced] 未获取字母点数对应元素时是否返回数字格式
+	 * @param { boolean } [forced] 未获取字母点数对应元素时，若此参数不为false，则返回数字格式
 	 * @returns { number }
 	 */
 	numString(str, forced) {
@@ -2868,7 +2865,7 @@ export class Get extends GetCompatible {
 			map[list[1]] = list[0];
 			return map;
 		}, {})[str];
-		if (result === undefined && forced) result = parseInt(str);
+		if (result === undefined && forced !== false) result = parseInt(str);
 		return result;
 	}
 	/**

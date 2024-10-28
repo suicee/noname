@@ -1382,3 +1382,14 @@
 	pointer-events: none;
 	z-index: 87;
 }
+
+.player .tipContainer {
+    z-index: 61;
+    top: 30%;
+}
+
+.player .tipContainer>.tip {
+    width: 100%;
+    left: 3%;
+    transform: scale(0.9);
+}

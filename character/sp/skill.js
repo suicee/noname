@@ -5459,17 +5459,17 @@ const skills = {
 			aiValue: (player, card, val) => {
 				if (card.name == "wuxie") return 0;
 				var num = get.number(card);
-				if (typeof get.strNumber(num) === "string") return val * 1.1;
+				if (typeof get.strNumber(num, false) === "string") return val * 1.1;
 			},
 			aiUseful: (player, card, val) => {
 				if (card.name == "wuxie") return 0;
 				var num = get.number(card);
-				if (typeof get.strNumber(num) === "string") return val * 1.1;
+				if (typeof get.strNumber(num, false) === "string") return val * 1.1;
 			},
 			aiOrder: (player, card, order) => {
 				if (get.name(card) == "sha" && player.hasSkill("oltuishi_unlimit")) order += 9;
 				var num = get.number(card);
-				if (typeof get.strNumber(num) === "string") order += 3;
+				if (typeof get.strNumber(num, false) === "string") order += 3;
 				return order;
 			},
 		},
@@ -5489,7 +5489,7 @@ const skills = {
 						.indexOf(event) >= 2
 				);
 			}
-			return typeof get.strNumber(get.number(event.card)) === "string";
+			return typeof get.strNumber(get.number(event.card), false) === "string";
 		},
 		forced: true,
 		content: function () {
