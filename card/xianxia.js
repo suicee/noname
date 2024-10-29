@@ -269,6 +269,7 @@ game.import("card", function () {
 			},
 			ty_feilongduofeng: {
 				fullskin: true,
+				cardimage: "feilongduofeng",
 				type: "equip",
 				subtype: "equip1",
 				distance: { attackFrom: -1 },

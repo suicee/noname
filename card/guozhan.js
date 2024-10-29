@@ -722,6 +722,18 @@ game.import("card", function () {
 					order: 7.5,
 					value: 4,
 					useful: 2,
+					wuxie: (target, card, player, viewer, status) => {
+						if (
+							target.hasSkillTag("nodamage") ||
+							target.hasSkillTag("nofire") ||
+							target.hasSkillTag("nothunder")
+						) return 0;
+						if (
+							get.damageEffect(target, player, viewer, "thunder") >= 0 ||
+							get.damageEffect(target, player, viewer, "fire") >= 0
+						) return 0;
+						if (target.hp + target.hujia > 2 && target.mayHaveShan(viewer, "use")) return 0;
+					},
 					result: {
 						target: function (player, target) {
 							if (get.mode() == "versus") {

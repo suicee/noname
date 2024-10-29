@@ -1822,8 +1822,7 @@ const skills = {
 		enable: "phaseUse",
 		usable: 1,
 		async content(event, trigger, player) {
-			let cards = get.cards(3);
-			await game.cardsGotoOrdering(cards);
+			let cards = get.cards(3, true);
 			await player.showCards(cards, get.translation(player) + "发动了【冲虚】");
 			const {
 				result: {
@@ -2177,8 +2176,7 @@ const skills = {
 			return 5 - get.value(card);
 		},
 		async content(event, trigger, player) {
-			let cards = get.cards(event.cards.length);
-			await game.cardsGotoOrdering(cards);
+			let cards = get.cards(event.cards.length, true);
 			await player.showCards(cards, get.translation(player) + "发动了【爵制】");
 			const {
 				result: {
