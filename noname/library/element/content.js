@@ -3040,8 +3040,8 @@ export const Content = {
 			}
 		}
 		"step 4";
-		if (window.decadeUI){
-			setTimeout(decadeUI.effect.gameStart, 51);
+		if (window.decadeUI) {
+			game.broadcastAll( () => setTimeout(decadeUI.effect.gameStart, 51) );
 		}
 	},
 	phaseLoop: function () {

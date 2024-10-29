@@ -5218,6 +5218,7 @@ const skills = {
 				info[result.index] = Math.min(5, info[result.index] + 1);
 				game.log(player, "的", result.control.slice(0, result.control.indexOf("(")), "#y+1");
 				player.markSkill("olgangshu_buff");
+				player.addTip("olgangshu_buff", "刚述 " + info.slice().join(" "));
 			}
 		},
 		ai: {

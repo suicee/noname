@@ -304,7 +304,7 @@ decadeModule.import((lib, game, ui, get, ai, _status) => {
 				}).length) event.num++;
 				if (!player.isMinHandcard()) event.num++;
 				if (!player.getStat('damage')) event.num++;
-				'step 1'
+				'step 1';
 				if (event.num == 0) {
 					player.gain(event.cards, 'draw');
 					event.finish();
@@ -376,8 +376,8 @@ decadeModule.import((lib, game, ui, get, ai, _status) => {
 				} else if (!event.isMine()) {
 					event.switchToAuto();
 				}
-				'step 2'
-				event.cards = event.cards2
+				'step 2';
+				event.cards = event.cards2;
 				if (event.result && event.result.bool) {
 					var cards = event.cards1;
 					var first = ui.cardPile.firstChild;
@@ -385,7 +385,7 @@ decadeModule.import((lib, game, ui, get, ai, _status) => {
 						ui.cardPile.insertBefore(cards[i], first);
 					}
 				}
-				'step 3'
+				'step 3';
 				game.updateRoundNumber();
 				if (event.cards.length) {
 					player.gain(event.cards, 'draw');
@@ -397,7 +397,7 @@ decadeModule.import((lib, game, ui, get, ai, _status) => {
 						return - get.attitude(_status.event.player, target);
 					};
 				}
-				'step 4'
+				'step 4';
 				player.line(result.targets[0], 'fire');
 				player.loseHp();
 				result.targets[0].loseHp();
@@ -405,7 +405,7 @@ decadeModule.import((lib, game, ui, get, ai, _status) => {
 		},
 		xunxun: {
 			content:function(){
-				'step 0'
+				'step 0';
 				var cards = get.cards(4);
 				var player = event.player;
 				var xunxun = decadeUI.content.chooseGuanXing(player, cards, cards.length, null, 2);
@@ -448,7 +448,7 @@ decadeModule.import((lib, game, ui, get, ai, _status) => {
 					event.switchToAuto();
 				}
 				
-				'step 1'
+				'step 1';
 				var first = ui.cardPile.firstChild;
 				var cards = event.cards2;
 				for (var i = 0; i < cards.length; i++) {
@@ -464,7 +464,7 @@ decadeModule.import((lib, game, ui, get, ai, _status) => {
 		},
 		xinfu_dianhua: {
 			content:function(){
-				'step 0'
+				'step 0';
 				var player = event.player;
 				if(player.isUnderControl()) game.modeSwapPlayer(player);
 				var num = 0;
@@ -475,12 +475,11 @@ decadeModule.import((lib, game, ui, get, ai, _status) => {
 				var cards = get.cards(num);
 				var dianhua = decadeUI.content.chooseGuanXing(player, cards, cards.length, null, cards.length);
 				dianhua.caption = '【点化】';
-				game.broadcast(function(player, cards, callback){
+				game.broadcast(function(player, cards){
 					if (!window.decadeUI) return;
 					var dianhua = decadeUI.content.chooseGuanXing(player, cards, cards.length, null, cards.length);
 					dianhua.caption = '【点化】';
-					dianhua.callback = callback;
-				}, player, cards, dianhua.callback);
+				}, player, cards);
 				
 				event.switchToAuto = function(){
 					var cards = dianhua.cards[0].concat();
@@ -506,12 +505,12 @@ decadeModule.import((lib, game, ui, get, ai, _status) => {
 							if (friend) {
 								if (get.value(cards[i], friend) >= 5) {
 									cheats.push(cards[i]);
-									cards.splice(i, 1)
+									cards.splice(i, 1);
 								}
 							} else {
 								if (get.value(cards[i], next) < 4) {
 									cheats.push(cards[i]);
-									cards.splice(i, 1)
+									cards.splice(i, 1);
 								}
 							}
 						}
@@ -545,7 +544,7 @@ decadeModule.import((lib, game, ui, get, ai, _status) => {
 				} else if (!event.isMine()) {
 					event.switchToAuto();
 				}
-				'step 1'
+				'step 1';
 				player.popup(get.cnNumber(event.num1) + '上' + get.cnNumber(event.num2) + '下');
 				game.log(player, '将' + get.cnNumber(event.num1) + '张牌置于牌堆顶，' + get.cnNumber(event.num2) +'张牌置于牌堆底');
 				game.updateRoundNumber();
@@ -636,7 +635,7 @@ decadeModule.import((lib, game, ui, get, ai, _status) => {
 					event.switchToAuto();
 				}
 				
-				'step 1'
+				'step 1';
 				var first = ui.cardPile.firstChild;
 				var cards = event.cards2;
 				for (var i = 0; i < cards.length; i++) {
@@ -678,7 +677,7 @@ decadeModule.import((lib, game, ui, get, ai, _status) => {
 						for (var i = 0; i >= 0 && i < cards.length; i++) {
 							if (get.value(cards[i], player) >= 5) {
 								cheats.push(cards[i]);
-								cards.splice(i, 1)
+								cards.splice(i, 1);
 							}
 						}
 					}
@@ -699,7 +698,7 @@ decadeModule.import((lib, game, ui, get, ai, _status) => {
 						}, time, cards[i], i, (i >= cards.length - 1));
 						time += 500;
 					}
-				}
+				};
 				
 				if (event.isOnline()) {
 					event.player.send(function(){
@@ -711,7 +710,7 @@ decadeModule.import((lib, game, ui, get, ai, _status) => {
 				} else if (!event.isMine()) {
 					event.switchToAuto();
 				}
-				"step 1"
+				"step 1";
 				player.popup(get.cnNumber(event.num1) + '上' + get.cnNumber(event.num2) + '下');
 				game.log(player, '将' + get.cnNumber(event.num1) + '张牌置于牌堆顶，' + get.cnNumber(event.num2) +'张牌置于牌堆底');
 				game.updateRoundNumber();
@@ -760,7 +759,7 @@ decadeModule.import((lib, game, ui, get, ai, _status) => {
 						}, time, cards[i], i, i >= cards.length - 1);
 						time += 500;
 					}
-				}
+				};
 				
 				if (event.isOnline()) {
 					event.player.send(function(){
@@ -776,9 +775,9 @@ decadeModule.import((lib, game, ui, get, ai, _status) => {
 		},
 		luoying_discard: {
 			content: function() {
-				"step 0"
+				"step 0";
 				if (trigger.delay == false) game.delay();
-				"step 1"
+				"step 1";
 				var cards = [];
 				for (var i = 0; i < trigger.cards2.length; i++) {
 					var card = trigger.cards2[i];
@@ -818,7 +817,7 @@ decadeModule.import((lib, game, ui, get, ai, _status) => {
 						}, time, cards[i], i, i >= cards.length - 1);
 						time += 500;
 					}
-				}
+				};
 				
 				if (event.isOnline()) {
 					event.player.send(function(){
@@ -830,7 +829,7 @@ decadeModule.import((lib, game, ui, get, ai, _status) => {
 				} else if (!event.isMine()) {
 					event.switchToAuto();
 				}
-				"step 2"
+				"step 2";
 				game.cardsDiscard(event.cards1);
 				if (event.cards2) {
 					player.gain(event.cards2, 'gain2', 'log');
@@ -839,7 +838,7 @@ decadeModule.import((lib, game, ui, get, ai, _status) => {
 		},
 		luoying_judge: {
 			content: function() {
-				"step 0"
+				"step 0";
 				var cards = trigger.cards;
 				
 				var dialog = decadeUI.content.chooseGuanXing(player, cards, cards.length, null, cards.length, false);
@@ -870,7 +869,7 @@ decadeModule.import((lib, game, ui, get, ai, _status) => {
 						}, time, cards[i], i, i >= cards.length - 1);
 						time += 500;
 					}
-				}
+				};
 				
 				if (event.isOnline()) {
 					event.player.send(function(){
@@ -882,7 +881,7 @@ decadeModule.import((lib, game, ui, get, ai, _status) => {
 				} else if (!event.isMine()) {
 					event.switchToAuto();
 				}
-				"step 1"
+				"step 1";
 				game.cardsDiscard(event.cards1);
 				if (event.cards2) {
 					player.gain(event.cards2, 'gain2', 'log');
@@ -903,7 +902,7 @@ decadeModule.import((lib, game, ui, get, ai, _status) => {
 		},
 		nk_shekong: {
 			content:function(){
-				'step 0'
+				'step 0';
 				event.cardsx = cards.slice(0);
 				var num = get.cnNumber(cards.length);
 				var trans = get.translation(player);
@@ -923,7 +922,7 @@ decadeModule.import((lib, game, ui, get, ai, _status) => {
 					}) >= _status.event.numx)) return 7 - get.value(card);
 					return - 1;
 				};
-				'step 1'
+				'step 1';
 				if (result.bool) {
 					if (result.cards.length == cards.length) player.draw();
 					else player.draw(cards.length);
@@ -932,7 +931,7 @@ decadeModule.import((lib, game, ui, get, ai, _status) => {
 						if (get.position(event.cardsx[i]) != 'd') event.cardsx.splice(i--, 1);
 					}
 				} else event.finish();
-				'step 2'
+				'step 2';
 				if (event.cardsx.length) {
 					var cards = event.cardsx;
 					var dialog = decadeUI.content.chooseGuanXing(player, cards, cards.length);
@@ -972,7 +971,7 @@ decadeModule.import((lib, game, ui, get, ai, _status) => {
 							}, time, cards[i], i, i >= cards.length - 1);
 							time += 500;
 						}
-					}
+					};
 					
 					if (event.isOnline()) {
 						event.player.send(function(){
@@ -985,15 +984,15 @@ decadeModule.import((lib, game, ui, get, ai, _status) => {
 						event.switchToAuto();
 					}
 				} else event.finish();
-			}
+			},
 		},
 		kamome_huanmeng:{
 			content:function(){
-				"step 0"
+				"step 0";
 				if (player.isUnderControl()) {
 					game.modeSwapPlayer(player);
 				}
-				var num = 1 + player.countCards('e');;
+				var num = 1 + player.countCards('e');
 				var cards = get.cards(num);
 				var guanxing = decadeUI.content.chooseGuanXing(player, cards, cards.length, null, cards.length);
 				guanxing.caption = '【幻梦】';
@@ -1014,7 +1013,7 @@ decadeModule.import((lib, game, ui, get, ai, _status) => {
 						for (var i = 0; i >= 0 && i < cards.length; i++) {
 							if (get.value(cards[i], player) >= 5) {
 								cheats.push(cards[i]);
-								cards.splice(i, 1)
+								cards.splice(i, 1);
 							}
 						}
 					}
@@ -1035,7 +1034,7 @@ decadeModule.import((lib, game, ui, get, ai, _status) => {
 						}, time, cards[i], i, (i >= cards.length - 1));
 						time += 500;
 					}
-				}
+				};
 				
 				if (event.isOnline()) {
 					event.player.send(function(){
@@ -1047,7 +1046,7 @@ decadeModule.import((lib, game, ui, get, ai, _status) => {
 				} else if (!event.isMine()) {
 					event.switchToAuto();
 				}
-				"step 1"
+				"step 1";
 				player.popup(get.cnNumber(event.num1) + '上' + get.cnNumber(event.num2) + '下');
 				game.log(player, '将' + get.cnNumber(event.num1) + '张牌置于牌堆顶，' + get.cnNumber(event.num2) +'张牌置于牌堆底');
 				game.updateRoundNumber()

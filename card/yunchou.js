@@ -109,6 +109,26 @@ game.import("card", function () {
 							ui.create.button(result.cards[0], "card", event.button.parentNode)
 						);
 						event.button.remove();
+						game.broadcast(
+							function (removed_card, added_card, id) {
+								let dialog = get.idDialog(id);
+								if (dialog) {
+									for (var i = 0; i < dialog.buttons.length; i++) {
+										if (dialog.buttons[i].link == removed_card) {
+											let removed_card_button = dialog.buttons[i];
+											dialog.buttons.remove(dialog.buttons[i]);
+											dialog.buttons.push(
+												ui.create.button(added_card, "card", removed_card_button.parentNode)
+											);
+											removed_card_button.remove();
+										}
+									}
+								}
+							},
+							event.button.link,
+							result.cards[0],
+							event.dialog.videoId
+						);
 					}
 					"step 3";
 					game.delay(2);

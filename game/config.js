@@ -128,7 +128,7 @@ window.config = {
 	right_click: "pause",
 	sort: "type_sort",
 
-	cards: ["standard", "extra", "sp", "zhulu", "yingbian", "yongjian", "yunchou"],
+	cards: ["standard", "extra", "sp", "zhulu", "yingbian", "yongjian", "yunchou", "xianxia"],
 	characters: ["standard", "shenhua", "sp", "sp2", "yijiang", "newjiang", "sixiang", "refresh", "mobile", "extra", "yingbian", "sb", "tw", "offline", "clan", "collab", "xianding", "huicui", "shiji", "jsrg", "onlyOL", "old"],
 	moderned_chracters: ["standard", "shenhua", "sp", "sp2", "yijiang", "newjiang", "sixiang", "refresh", "mobile", "extra", "yingbian", "sb", "tw", "offline", "clan", "collab", "xianding", "huicui", "shiji", "onlyOL", "jsrg", "old", "diy", "ddd", "key"],
 	connect_characters: ["diy", "ddd", "key"],

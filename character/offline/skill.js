@@ -814,7 +814,7 @@ const skills = {
 		global: "xk_qiyijun_effect",
 		qiyi(player) {
 			player.addSkill("xk_qiyijun");
-			player.markSkillCharacter("xk_qiyijun", "shibing1", "起义军", "已决定起义<br>未起义的角色对你使用【杀】次数+1");
+			player.markSkillCharacter("xk_qiyijun", player, "起义军", "已决定起义<br>未起义的角色对你使用【杀】次数+1");
 			const next = game.createEvent("becomeQiyi");
 			next.player = player;
 			next.setContent("emptyEvent");
