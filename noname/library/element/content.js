@@ -864,7 +864,7 @@ export const Content = {
 				event.vcards.some(card => {
 					const info = get.info(card, false);
 					return info && info.loseThrow;
-				})
+				}) || true
 			) {
 				player.$throw(result.cards, 1000);
 			}
@@ -9523,10 +9523,8 @@ export const Content = {
 			} else {
 				game.log(player, '被贴上了<span class="yellowtext">' + get.translation(cardName) + "</span>（", cards, "）");
 			}
-			if (window.decadeUI) cards[0].node.judgeMark.node.judge.innerHTML = get.translation(cards[0].viewAs)[0];
 		} else {
 			game.log(player, "被贴上了", card);
-			if (window.decadeUI) cards[0].node.judgeMark.node.judge.innerHTML = get.translation(cards[0].name)[0];
 		}
 	},
 	addJudge_old: function () {
@@ -9578,14 +9576,9 @@ export const Content = {
 					card.viewAs = viewAs;
 					if (viewAs && viewAs != card.name && (card.classList.contains("fullskin") || card.classList.contains("fullborder"))) {
 						card.classList.add("fakejudge");
-						if (window.decadeUI){
-							card.node.judgeMark.node.judge.innerHTML = get.translation(viewAs)[0];
-						} else {
-							card.node.background.innerHTML = lib.translate[viewAs + "_bg"] || get.translation(viewAs)[0];
-						}
+						card.node.background.innerHTML = lib.translate[viewAs + "_bg"] || get.translation(viewAs)[0];
 					} else {
 						card.classList.remove("fakejudge");
-						if (window.decadeUI) card.node.judgeMark.node.judge.innerHTML = get.translation(card.name)[0];
 					}
 					player.node.judges.insertBefore(card, player.node.judges.firstChild);
 					ui.updatej(player);
@@ -9612,7 +9605,6 @@ export const Content = {
 			if (cards[0].viewAs && cards[0].viewAs != cards[0].name) {
 				if (cards[0].classList.contains("fullskin") || cards[0].classList.contains("fullborder")) {
 					cards[0].classList.add("fakejudge");
-					if (window.decadeUI) cards[0].node.judgeMark.node.judge.innerHTML = get.translation(cards[0].viewAs)[0];
 					cards[0].node.background.innerHTML = lib.translate[cards[0].viewAs + "_bg"] || get.translation(cards[0].viewAs)[0];
 				}
 				if (lib.card[viewAs].blankCard) {
@@ -9622,7 +9614,6 @@ export const Content = {
 				}
 			} else {
 				cards[0].classList.remove("fakejudge");
-				if (window.decadeUI) cards[0].node.judgeMark.node.judge.innerHTML = get.translation(cards[0].name)[0];
 				game.log(player, "被贴上了", cards);
 			}
 			game.addVideo("addJudge", player, [get.cardInfo(cards[0]), cards[0].viewAs]);
