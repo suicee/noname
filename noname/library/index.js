@@ -4170,15 +4170,7 @@ export class Library {
 					unfrequent: true,
 					onclick(bool) {
 						game.saveConfig("show_tip", bool);
-						if (lib.config.show_tip) {
-							game.css({
-								".tipContainer": {
-									display: "flex !important",
-								},
-							});
-						} else {
-							game.css({ ".tipContainer": { display: "none !important" } });
-						}
+						document.documentElement.style.setProperty("--tip-display", bool ? "flex" : "none");
 					},
 				},
 				show_deckMonitor: {
@@ -12309,6 +12301,15 @@ export class Library {
 	cardPile = {};
 	message = {
 		server: {
+			cardPile() {
+				this.send(JSON.stringify({
+					type: "cardPile",
+					data: {
+						drawPile: Array.from(ui.cardPile.children),
+						discardPile: Array.from(ui.discardPile.children)
+					}
+				}));
+			},
 			/**
 			 * @this {import("./element/client.js").Client}
 			 */
