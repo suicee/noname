@@ -2363,9 +2363,13 @@ export class Create {
 							try {
 								game.ws.send(JSON.stringify(['cardPile']));
 								game.ws.addEventListener('message', function (e) {
-									let data = JSON.parse(JSON.parse(e.data)[0]);
-									if (data.type == 'cardPile') {
-										resolve(data.data);
+									let received_data = JSON.parse(e.data)[0];
+									let received_message_data_type = JSON.parse(e.data)[1];
+									if (received_message_data_type == "cardPile") {
+										let data = JSON.parse(received_data);
+										if (data.type == "cardPile") {
+											resolve(data.data);
+										}
 									}
 								}, { once: true });
 

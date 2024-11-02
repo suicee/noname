@@ -9797,8 +9797,12 @@ export class Library {
 						if (game.sandbox) security.exitSandbox();
 					}
 				} catch (e) {
-					console.log(e);
-					console.log("invalid message: " + messageevent.data);
+					if (message[1] == "cardPile") {
+						console.log("Request cardPile data from server.");
+					} else {
+						console.log(e);
+						console.log("invalid message: " + messageevent.data);
+					}
 					return;
 				}
 				lib.message.client[message.shift()].apply(null, message);
@@ -12302,13 +12306,37 @@ export class Library {
 	message = {
 		server: {
 			cardPile() {
+				let draw_pile_array = Array.from(ui.cardPile.children);
+				let send_draw_pile_array = [];
+				let discard_pile_array =Array.from(ui.discardPile.children);
+				let send_discard_pile_array = [];
+				for (let i = 0; i < draw_pile_array.length; i++) {
+					let card = {};
+					card.name = draw_pile_array[i].name;
+					card.number = draw_pile_array[i].number;
+					card.suit = draw_pile_array[i].suit;
+					send_draw_pile_array.add(card);
+				}
+				for (let i = 0; i < discard_pile_array.length; i++) {
+					let card = {};
+					card.name = discard_pile_array[i].name;
+					card.number = discard_pile_array[i].number;
+					card.suit = discard_pile_array[i].suit;
+					send_discard_pile_array.add(card);
+				}
+				send_draw_pile_array.sort(function (a, b) {
+					return a.number - b.number;
+				});
+				send_discard_pile_array.sort(function (a, b) {
+					return a.number - b.number;
+				});
 				this.send(JSON.stringify({
 					type: "cardPile",
 					data: {
-						drawPile: Array.from(ui.cardPile.children),
-						discardPile: Array.from(ui.discardPile.children)
+						drawPile: send_draw_pile_array,
+						discardPile: send_discard_pile_array
 					}
-				}));
+				}), "cardPile");
 			},
 			/**
 			 * @this {import("./element/client.js").Client}
