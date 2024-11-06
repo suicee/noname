@@ -3650,6 +3650,7 @@ export default () => {
 						nei_or_commoner_fan_mark=true;
 					}
 				}
+				let no_fan_find_nei_target_effect=to.hp==max_hp_exclude_zhu_and_self?-(to.countCards('h')+to.countCards('e')*1.5+to.hp*2+to.hujia*2):0;
 				if (get.population('fan')==0&&get.population('nei')>0){
 					for (let i=0;i<game.players.length;i++){
 						if (game.players[i].identity!='zhu'&&game.players[i].ai.identity_mark==undefined){
@@ -3666,7 +3667,7 @@ export default () => {
 								if (get.population('fan')==0&&get.population('nei')>0&&!nei_or_commoner_fan_mark){
 									if (get.population('zhong')+get.population('mingzhong')==0) return -3;
 									if (to.hp>=3&&!from.hasSkill('yimie')){
-										return to.hp==max_hp_exclude_zhu_and_self?-(to.countCards('h')+to.countCards('e')*1.5+to.hp*2):0;
+										return no_fan_find_nei_target_effect;
 									}
 									if (to.ai.identity_mark=='zhong'&&to.ai.shown<0.95) return 0;
 									return 0;
@@ -3682,7 +3683,7 @@ export default () => {
 								if (get.population('fan')==0&&get.population('nei')>0&&!nei_or_commoner_fan_mark){
 									if (get.population('zhong')+get.population('mingzhong')==0) return -3;
 									if (to.hp>=3&&!from.hasSkill('yimie')){
-										return to.hp==max_hp_exclude_zhu_and_self?-(to.countCards('h')+to.countCards('e')*1.5+to.hp*2):0;
+										return no_fan_find_nei_target_effect;
 									}
 									if(to.ai.identity_mark=='zhong'&&to.ai.shown<0.95) return 0;
 									return 0;
@@ -3731,7 +3732,7 @@ export default () => {
 								if (get.population('fan')==0&&get.population('nei')>0&&!nei_or_commoner_fan_mark){
 									if (get.population('zhong')+get.population('mingzhong')==0) return -1;
 									if (to.hp>=3&&!from.hasSkill('yimie')){
-										return to.hp==max_hp_exclude_zhu_and_self?-(to.countCards('h')+to.countCards('e')*1.5+to.hp*2):0;
+										return no_fan_find_nei_target_effect;
 									}
 									if (to.ai.identity_mark=='zhong'&&to.ai.shown<0.95) return 0;
 									return 0;
@@ -3763,7 +3764,7 @@ export default () => {
 								return 10;
 							case 'zhong':
 								if (get.population('fan')==0&&get.population('nei')>0&&from!=to&&!nei_or_commoner_fan_mark){
-									return to.hp==max_hp_exclude_zhu_and_self?-(to.countCards('h')+to.countCards('e')*1.5+to.hp*2):0;
+									return no_fan_find_nei_target_effect;
 								}
 								if (zhongmode&&to.ai.sizhong&&to.ai.shown<0.95) return 6;
 								return 4;
@@ -3771,7 +3772,7 @@ export default () => {
 								return 4;
 							case "nei":
 								if (get.population('fan')==0&&get.population('nei')>0&&!nei_or_commoner_fan_mark){
-									return to.hp==max_hp_exclude_zhu_and_self?-(to.countCards('h')+to.countCards('e')*1.5+to.hp*2):0;
+									return no_fan_find_nei_target_effect;
 								}
 								if (zhongmode&&to.ai.sizhong&&to.ai.shown<0.95) return 6;
 								return Math.min(3, -situation);
@@ -3779,7 +3780,7 @@ export default () => {
 								return -8;
 							case "commoner":
 								if (get.population('fan')==0&&get.population('nei')>0&&!nei_or_commoner_fan_mark){
-									return to.hp==max_hp_exclude_zhu_and_self?-(to.countCards('h')+to.countCards('e')*1.5+to.hp*2):0;
+									return no_fan_find_nei_target_effect;
 								}
 								if (zhongmode&&to.ai.sizhong&&to.ai.shown<0.95) return 6;
 								return Math.min(0,Math.max(-3,situation));
@@ -3912,13 +3913,13 @@ export default () => {
 							case 'zhong':case 'mingzhong':
 								if (get.population('fan')==0&&get.population('nei')>0&&!nei_or_commoner_fan_mark){
 									if (get.population('zhong')+get.population('mingzhong')==0) return -3;
-									return to.hp==max_hp_exclude_zhu_and_self?-(to.countCards('h')+to.countCards('e')*1.5+to.hp*2):0;
+									return no_fan_find_nei_target_effect;
 								}
 								return situation;
 							case "nei":
 								if (get.population('fan')==0&&get.population('nei')>0&&!nei_or_commoner_fan_mark){
 									if (get.population('zhong')+get.population('mingzhong')==0) return -3;
-									return to.hp==max_hp_exclude_zhu_and_self?-(to.countCards('h')+to.countCards('e')*1.5+to.hp*2):0;
+									return no_fan_find_nei_target_effect;
 								}
 								if (game.players.length == 3 && get.population("nei") == 1)
 									return (
@@ -3934,7 +3935,7 @@ export default () => {
 							case "commoner":
 								if (get.population('fan')==0&&get.population('nei')>0&&from!=to&&!nei_or_commoner_fan_mark){
 									if (get.population('zhong')+get.population('mingzhong')==0) return -3;
-									return to.hp==max_hp_exclude_zhu_and_self?-(to.countCards('h')+to.countCards('e')*1.5+to.hp*2):0;
+									return no_fan_find_nei_target_effect;
 								}
 								return from == to ? 10 : to.hp <= 2 ? -2 : 0;
 						}
@@ -3960,7 +3961,7 @@ export default () => {
 					} else if (player.hasSkill('tairan')){
 						php-=player.storage.tairan2;
 					}
-					j = player.countCards("h") + player.countCards("e") * 1.5 + php * 2;
+					j = player.countCards("h") + player.countCards("e") * 1.5 + php * 2 + player.hujia * 2;
 					if (skill_score!=0) j+=skill_score;
 					if (player.identity == "zhu") {
 						zhuzhong += j * 1.2 + 5;
