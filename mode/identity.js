@@ -3802,7 +3802,7 @@ export default () => {
 								if (to.hp<=0&&get.population('fan')+get.population('zhong')+get.population('mingzhong')>0) return 10;
 								if (get.population('fan')+get.population('zhong')+get.population('mingzhong')==0) return -3;
 								if (situation>0&&to.hp>2) return 0;
-								if (get.population("fan") == 1) {
+								if (get.population("fan") == 1 && get.population("nei") == 1 && game.players.length == 3) {
 									var fan;
 									for (var i = 0; i < game.players.length; i++) {
 										if (game.players[i].identity == "fan") {
@@ -3812,7 +3812,7 @@ export default () => {
 									}
 									if (fan) {
 										if (to.hp > 1 && to.hp > fan.hp && to.countCards("he") > fan.countCards("he")) {
-											return -1.7;
+											return -3;
 										}
 									}
 									return 0;
@@ -3891,12 +3891,12 @@ export default () => {
 								return -5;
 							case "nei":
 								if (zhongmode && to.ai.sizhong && to.ai.shown < 0.95) return -7;
-								if (get.population("fan") == 1) return -4;
+								if (get.population("fan") == 1 && get.population("nei") == 1 && game.players.length == 3) return -4;
 								if (get.population("zhong") + get.population("mingzhong") == 0) return -7;
 								if (game.zhu && game.zhu.hp <= 2) return -1;
 								return Math.min(3, situation);
 							case "fan":
-								if (from!=to&&get.population("fan") == 1) return -4;
+								if (from != to && get.population("fan") == 1 && get.population("nei") == 1 && game.players.length == 3) return -4;
 								return 5;
 							case "commoner":
 								if (zhongmode&&to.ai.sizhong&&to.ai.shown<0.95) return -6;
