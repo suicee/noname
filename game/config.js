@@ -181,7 +181,6 @@ window.config = {
 		"xin_yujin",
 		"old_xusheng",
 		"old_lingtong",
-		"ol_yujin",
 		"gongsunzan",
 		"old_huaxiong",
 		"weiyan",
@@ -261,7 +260,6 @@ window.config = {
 		"xin_chengpu",
 		"handang",
 		"re_handang",
-		"caochong",
 		"manchong",
 		"guanping",
 		"guanzhang",
@@ -269,7 +267,8 @@ window.config = {
 		"jsp_huangyueying",
 		"old_xiaoqiao",
 		"old_gaoshun",
-		"jsp_liubei"
+		"jsp_liubei",
+		"old_caochong"
 	],
 	connect_identity_banned:[
 		"caocao",
@@ -303,7 +302,6 @@ window.config = {
 		"xin_yujin",
 		"old_xusheng",
 		"old_lingtong",
-		"ol_yujin",
 		"gongsunzan",
 		"old_huaxiong",
 		"weiyan",
@@ -383,7 +381,6 @@ window.config = {
 		"xin_chengpu",
 		"handang",
 		"re_handang",
-		"caochong",
 		"manchong",
 		"guanping",
 		"guanzhang",
@@ -391,7 +388,8 @@ window.config = {
 		"jsp_huangyueying",
 		"old_xiaoqiao",
 		"old_gaoshun",
-		"jsp_liubei"
+		"jsp_liubei",
+		"old_caochong"
 	],
 
 	mode: "identity",

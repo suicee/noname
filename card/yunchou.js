@@ -780,7 +780,7 @@ game.import("card", function () {
 							var card=target.getCards('e');
 							var val=0;
 							for (var i=0;i<card.length;i++){
-								val+=get.equipValue(card[i]);
+								if (lib.filter.cardDiscardable(card[i], target)) val+=get.equipValue(card[i]);
 							}
 							if (val>0) return -val;
 							return 0;

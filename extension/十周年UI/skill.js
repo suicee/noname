@@ -191,7 +191,13 @@ decadeModule.import((lib, game, ui, get, ai, _status) => {
 		chengxiang:{
 			content: function() {
 				'step 0'
-				var cards = get.cards(4);
+				var chengxiangNum = event.name == "oldchengxiang" ? 12 : 13;
+				var mark = 0;
+				if (event.name == "olchengxiang") {
+					mark += player.countMark("olchengxiang");
+					player.removeMark("olchengxiang", mark, false);
+				}
+				var cards = get.cards(4 + mark);
 				var guanXing = decadeUI.content.chooseGuanXing(player, cards, cards.length, null, 4, false);
 				guanXing.doubleSwitch = true;
 				guanXing.caption = '【称象】';
@@ -202,7 +208,7 @@ decadeModule.import((lib, game, ui, get, ai, _status) => {
 						num += get.number(this.cards[1][i]);
 					}
 					
-					return num > 0 && num <= 13;
+					return num > 0 && num <= chengxiangNum;
 				};
 				
 				game.broadcast(function(player, cards, callback){
@@ -229,7 +235,7 @@ decadeModule.import((lib, game, ui, get, ai, _status) => {
 								continue;
 							
 							num = sum + get.number(cards[j]);
-							if (num <= 13) {
+							if (num <= chengxiangNum) {
 								sum = num;
 								if (!results[index]) results[index] = [];
 								if (get.value(cards[j], player)>=0) results[index].push(cards[j]);
@@ -290,7 +296,14 @@ decadeModule.import((lib, game, ui, get, ai, _status) => {
 				'step 1'
 				if (event.result && event.result.bool) {
 					game.cardsDiscard(event.cards1);
-					player.gain(event.cards2, 'log', 'gain2');
+					var cards2 = event.cards2;
+					player.gain(cards2, "gain2");
+					if (event.name == "olchengxiang") {
+						let num = cards2.reduce((num, i) => {
+							return num + get.number(i, player);
+						}, 0);
+						if (num == 13) player.addMark("olchengxiang", 1, false);
+					}
 				}
 			},
 		},

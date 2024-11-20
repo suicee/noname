@@ -1499,6 +1499,7 @@ export default () => {
 							}
 						}
 					} else if (player.identity == "zhu" && !stratagemMode) {
+						
 						list2.randomSort();
 						var choice, choice2;
 						if (!_status.event.zhongmode && Math.random() - 0.8 < 0 && list2.length) {
@@ -3801,7 +3802,7 @@ export default () => {
 								if (strategy == 5) return 10;
 								if (to.hp<=0&&get.population('fan')+get.population('zhong')+get.population('mingzhong')>0) return 10;
 								if (get.population('fan')+get.population('zhong')+get.population('mingzhong')==0) return -3;
-								if (situation>0&&to.hp>2) return 0;
+								if (situation>0) return 0;
 								if (get.population("fan") == 1 && get.population("nei") == 1 && game.players.length == 3) {
 									var fan;
 									for (var i = 0; i < game.players.length; i++) {

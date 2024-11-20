@@ -80,7 +80,18 @@ game.import("card", function () {
 						event.e2 = e2;
 						target
 							.chooseControl(choice)
-							.set("choiceList", ["弃置" + get.translation(e1), "弃置" + get.translation(e2)]);
+							.set("choiceList", ["弃置" + get.translation(e1), "弃置" + get.translation(e2)])
+							.set("ai", () => {
+								let e1_v = 0;
+								let e2_v = 0;
+								for (let i = 0; i < e1.length; i++) {
+									if (lib.filter.cardDiscardable(e1, target)) e1_v =+ get.equipValue(e1[i]);
+								}
+								for (let i = 0; i < e2.length; i++) {
+									if (lib.filter.cardDiscardable(e2, target)) e2_v =+ get.equipValue(e2[i]);
+								}
+								return e1_v > e2_v ? 1 : 0;
+							});
 					} else {
 						if (e1.length) {
 							target.discard(e1);
@@ -102,15 +113,19 @@ game.import("card", function () {
 					value: 5,
 					result: {
 						target: function (player, target) {
+							let target_equips = target.getCards("e");
+							if (target_equips.length == 1 && target_equips[0].name == "mengchong") return 0;
 							var num1 = 0,
 								num2 = 0;
 							for (var i = 1; i <= 4; i++) {
 								var cards = target.getEquips(i);
 								for (var card of cards) {
-									if (i == 1 || i == 4) {
-										num1 += get.equipValue(card);
-									} else {
-										num2 += get.equipValue(card);
+									if (lib.filter.cardDiscardable(card, target)) {
+										if (i == 1 || i == 4) {
+											num1 += get.equipValue(card);
+										} else {
+											num2 += get.equipValue(card);
+										}
 									}
 								}
 							}
