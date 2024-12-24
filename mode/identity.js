@@ -1499,7 +1499,6 @@ export default () => {
 							}
 						}
 					} else if (player.identity == "zhu" && !stratagemMode) {
-						
 						list2.randomSort();
 						var choice, choice2;
 						if (!_status.event.zhongmode && Math.random() - 0.8 < 0 && list2.length) {
