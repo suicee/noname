@@ -2516,7 +2516,7 @@ export class Library {
 				zhishixian: {
 					name: "指示线",
 					intro: "设置卡牌、技能的指示特效",
-					init: "default",
+					init: "Jinlong",
 					unfrequent: true,
 					item: {
 						default: "默认",
@@ -3702,7 +3702,7 @@ export class Library {
 				},
 				show_log: {
 					name: "历史记录栏",
-					init: "off",
+					init: "left",
 					intro: "在屏幕中部显示出牌文字记录",
 					unfrequent: true,
 					item: {
@@ -5262,7 +5262,7 @@ export class Library {
 				},
 				connect_enhance_zhu: {
 					name: "加强主公",
-					init: "sixiang",
+					init: "off",
 					item: {
 						sixiang: "四象标记",
 						specific: "专属技能",
@@ -5544,7 +5544,7 @@ export class Library {
 				},
 				enhance_zhu: {
 					name: "加强主公",
-					init: "sixiang",
+					init: "off",
 					item: {
 						sixiang: "四象标记",
 						specific: "专属技能",

@@ -1013,7 +1013,6 @@ game.import('extension', async function(lib, game, ui, get, ai, _status){
 					decadeModule.modules[i](lib, game, ui, get, ai, _status);
 
 					var getNodeIntro = get.nodeintro;
-					var gameLinexyFunction = game.linexy;
 					var gameUncheckFunction = game.uncheck;
 					var swapControlFunction = game.swapControl;
 					var swapPlayerFunction = game.swapPlayer;
@@ -1109,11 +1108,6 @@ game.import('extension', async function(lib, game, ui, get, ai, _status){
 							ui.equipSolts.appendChild(game.me.node.equips);
 						}
 						return result;
-					};
-
-					game.linexy = function(path){
-						if (!decadeUI.config.playerLineEffect) return gameLinexyFunction.apply(this, arguments);
-						decadeUI.effect.line(path);
 					};
 
 					ui.click.intro = function(e){
@@ -5743,14 +5737,6 @@ game.import('extension', async function(lib, game, ui, get, ai, _status){
 				onclick: value => {
 					game.saveConfig('extension_十周年UI_cardUseEffect', value);
 					if (window.decadeUI) decadeUI.config.cardUseEffect = value;
-				},
-			},
-			playerLineEffect:{
-				name: '玩家指示线特效',
-				init: true,
-				onclick: value => {
-					game.saveConfig('extension_十周年UI_playerLineEffect', value);
-					if (window.decadeUI) decadeUI.config.playerLineEffect = value;
 				},
 			},
 			outcropSkin:{

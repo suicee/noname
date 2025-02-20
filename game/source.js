@@ -2,6 +2,7 @@ window.noname_source_list = [
 	"LICENSE",
 	"noname.js",
 	"noname-compatible.js",
+	"noname-server.js",
 	"service-worker.js",
 
 	"noname/ai/basic.js",
