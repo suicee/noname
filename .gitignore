@@ -29,6 +29,7 @@ noname.ico
 package-lock.json
 package.json
 Thumbs.db
+desktop.ini
 bun.lockb
 deno.lock
 pnpm-lock.yaml
