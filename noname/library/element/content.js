@@ -9845,16 +9845,10 @@ export const Content = {
 				}
 				if (lib.cardOL) lib.cardOL[cardid] = event.node;
 				event.node.cardid = cardid;
-				if (!window.decadeUI) {
-					event.node.classList.add("thrownhighlight");
-					ui.arena.classList.add("thrownhighlight");
-					event.dialog = ui.create.dialog(str);
-					event.dialog.classList.add("center");
-				} else {
-					event.dialog = dui.showHandTip(str);
-					event.dialog.strokeText();
-					if (game.online) ui.dialogs.push(event.dialog);
-				}
+				event.node.classList.add("thrownhighlight");
+				ui.arena.classList.add("thrownhighlight");
+				event.dialog = ui.create.dialog(str);
+				event.dialog.classList.add("center");
 				event.dialog.videoId = id;
 			},
 			player,
