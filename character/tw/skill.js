@@ -2043,6 +2043,7 @@ const skills = {
 					},
 					cardSavable(card, player) {
 						if ([card].concat(card.cards || []).some(c => get.itemtype(c) === "card" && !player.getStorage("twrenxian_mark").includes(c))) return false;
+					},
 					cardUsable(card, player, num) {
 						if (card.name == "sha") return Infinity;
 					},
