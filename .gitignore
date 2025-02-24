@@ -19,6 +19,7 @@ image/*.TXT
 .vscode
 app
 app.html
+README.md
 ehthumbs.db
 Home
 jsconfig.json
