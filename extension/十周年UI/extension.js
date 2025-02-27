@@ -4344,10 +4344,7 @@ game.import('extension', async function(lib, game, ui, get, ai, _status){
 						if (!node.node) {
 							node = [...ui.arena.childNodes].find(c => {
 								if (c.classList.contains("thrown") && c.classList.contains("card")) {
-									if (c._cardid == id && !c.selectedt) {
-										c.selectedt = true;
-										return true;
-									}
+									return c._cardid == id;
 								}
 							});
 						}
@@ -4494,10 +4491,7 @@ game.import('extension', async function(lib, game, ui, get, ai, _status){
 							if (!node.node) {
 								node = [...ui.arena.childNodes].find(c => {
 									if (c.classList.contains("thrown") && c.classList.contains("card")) {
-										if (c._cardid == id && !c.selected_spine) {
-											c.selected_spine = true;
-											return true;
-										}
+										return c._cardid == id;
 									}
 								});
 							}
@@ -4645,25 +4639,91 @@ game.import('extension', async function(lib, game, ui, get, ai, _status){
 									tagText = '判定<span class="firetext">失效</span>';
 								}
 	
-								if (apcard && apcard._ap) apcard._ap.stopSpineAll();
+								if (apcard && apcard._ap) {
+									apcard._ap.stopSpineAll();
+
+									game.broadcast(function (node, id) {
+										if (!window.decadeUI) return;
+										if (!node.node) {
+											node = [...ui.arena.childNodes].find(c => {
+												if (c.classList.contains("thrown") && c.classList.contains("card")) {
+													return c._cardid == id;
+												}
+											});
+										}
+										if (node == undefined || !node.node) return;
+										if (node && node._ap) node._ap.stopSpineAll();
+									}, apcard, apcard._cardid);
+								}
 								if (apcard && apcard._ap && apcard == card) {
 									apcard._ap.playSpine({
 										name: 'effect_panding',
 										action: action
 									});
+									game.broadcast(function (node, id, action) {
+										if (!window.decadeUI) return;
+										if (!node.node) {
+											node = [...ui.arena.childNodes].find(c => {
+												if (c.classList.contains("thrown") && c.classList.contains("card")) {
+													return c._cardid == id;
+												}
+											});
+										}
+										if (node == undefined || !node.node) return;
+										node._ap.playSpine({
+											name: 'effect_panding',
+											action: action
+										});
+									}, apcard, apcard._cardid, action);
 								} else {
 									decadeUI.animation.cap.playSpineTo(card, {
 										name: 'effect_panding',
 										action: action
 									});
+									game.broadcast(function (node, id, action) {
+										if (!window.decadeUI) return;
+										if (!node.node) {
+											node = [...ui.arena.childNodes].find(c => {
+												if (c.classList.contains("thrown") && c.classList.contains("card")) {
+													return c._cardid == id;
+												}
+											});
+										}
+										if (node == undefined || !node.node) return;
+										decadeUI.animation.cap.playSpineTo(node, {
+											name: 'effect_panding',
+											action: action
+										});
+									}, apcard, apcard._cardid, action);
 								}
 	
 								event.apcard = undefined;
-								tagNode.innerHTML = '<span style="font-weight:700"><span style="color:#FFD700">' + get.translation(event.judgestr) + "</span>" + tagText + "</span>";
+								let judge_innerHTML_str = '<span style="font-weight:700"><span style="color:#FFD700">' + get.translation(event.judgestr) + "</span>" + tagText + "</span>";
+								tagNode.innerHTML = judge_innerHTML_str;
+								game.broadcast(function (node, tag_innerHTML, id) {
+									if (!window.decadeUI) return;
+									if (!node.node) {
+										node = [...ui.arena.childNodes].find(c => {
+											if (c.classList.contains("thrown") && c.classList.contains("card")) {
+												return c._cardid == id;
+											}
+										});
+									}
+									if (node == undefined || !node.node) return;
+									var tagNode = node.querySelector('.used-info');
+									if (tagNode == null) tagNode = node.appendChild(dui.element.create('used-info'));
+									node.$usedtag = tagNode;
+									tagNode.innerHTML = tag_innerHTML;
+								}, card, judge_innerHTML_str, card._cardid);
 							});
 	
 							if (duicfg.cardUseEffect) {
 								decadeUI.animation.cap.playSpineTo(card, {
+									name: 'effect_panding',
+									action: 'play',
+									loop: true
+								});
+								animation_playSpineTo_Client(card, {
 									name: 'effect_panding',
 									action: 'play',
 									loop: true
