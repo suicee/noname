@@ -7504,7 +7504,7 @@ export const Content = {
 								}
 								if (!node) continue;
 								if (str) node.querySelector(".info").innerHTML = str;
-								if (cards.length > 1 || !card.isCard || card.name != node.name || card.nature != node.nature || !card.cards.length) {
+								if (cards?.length > 1 || !card.isCard || card.name != node.name || card.nature != node.nature || !card?.cards?.length) {
 									ui.create.cardTempName(card, node);
 									if (node._tempName && card_cards?.length <= 0) {
 										node._tempName.innerHTML = node._tempName.innerHTML.slice(0, node._tempName.innerHTML.indexOf("<span", -1));
@@ -8346,7 +8346,7 @@ export const Content = {
 							}
 							if (!node) continue;
 							if (str) node.querySelector(".info").innerHTML = str;
-							if ((cards.length > 1 || !card.isCard || card.name != node.name || card.nature != node.nature || !card.cards.length) && !judgeing) {
+							if ((cards?.length > 1 || !card.isCard || card.name != node.name || card.nature != node.nature || !card?.cards?.length) && !judgeing) {
 								ui.create.cardTempName(card, node);
 								if (node._tempName && card_cards?.length <= 0) {
 									node._tempName.innerHTML = node._tempName.innerHTML.slice(0, node._tempName.innerHTML.indexOf("<span", -1));

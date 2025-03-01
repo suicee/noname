@@ -4388,16 +4388,6 @@ game.import('extension', async function(lib, game, ui, get, ai, _status){
 							}
 						case 'respond':
 							if (tagText == "") tagText = "打出";
-
-							var cardname = event.card.name;
-							var cardnature = event.card.nature;
-							if (lib.config.cardtempname != "off" && (card.name != cardname || !get.is.sameNature(cardnature, card.nature, true))) {
-								game.broadcastAll(function(event_card, card){
-									var node = ui.create.cardTempName(event_card, card);
-									var cardtempnameConfig = lib.config.cardtempname;
-									if (cardtempnameConfig !== "default") node.classList.remove("vertical");
-								}, event.card, card);
-							}
 							break;
 						case 'useskill':
 							tagText = "发动" + '<span style="color:#FFD700">' + get.skillTranslation(event.skill, event.player) + "</span>";
