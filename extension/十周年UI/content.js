@@ -174,6 +174,11 @@ decadeModule.import(function(lib, game, ui, get, ai, _status){
 					this.onMoved();
 				},
 				move:function(card, indexTo, moveDown){
+					game.broadcast(function(card, indexTo, moveDown){
+						if (!window.decadeUI && decadeUI.eventDialog) return;
+						decadeUI.eventDialog.move(card, indexTo, moveDown);
+					}, card, indexTo, moveDown);
+					
 					var dim = moveDown ? 1 : 0;
 					var dim2 = dim;
 					var index = this.cardToIndex(card, dim);

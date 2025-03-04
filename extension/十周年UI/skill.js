@@ -1067,17 +1067,19 @@ decadeModule.import((lib, game, ui, get, ai, _status) => {
 		},
 	}
 	
-	Object.keys(skillMap).forEach(key => {
-		const skill = lib.skill[key];
-		if (!skill) return;
-		const decadeUISkill = skillMap[key];
-		Object.keys(decadeUISkill).forEach(subKey => skill[subKey] = decadeUISkill[subKey]);
-	});
-	Object.keys(inheritSkillMap).forEach(key => {
-		const skill = lib.skill[key];
-		if (!skill) return;
-		const decadeUIInheritSkill = inheritSkillMap[key];
-		Object.keys(decadeUIInheritSkill).forEach(subKey => skill[subKey] = decadeUIInheritSkill[subKey]);
-	});
+	if (!_status.connectMode) {
+		Object.keys(skillMap).forEach(key => {
+			const skill = lib.skill[key];
+			if (!skill) return;
+			const decadeUISkill = skillMap[key];
+			Object.keys(decadeUISkill).forEach(subKey => skill[subKey] = decadeUISkill[subKey]);
+		});
+		Object.keys(inheritSkillMap).forEach(key => {
+			const skill = lib.skill[key];
+			if (!skill) return;
+			const decadeUIInheritSkill = inheritSkillMap[key];
+			Object.keys(decadeUIInheritSkill).forEach(subKey => skill[subKey] = decadeUIInheritSkill[subKey]);
+		});
+	}
 });
 
