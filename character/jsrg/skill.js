@@ -9419,7 +9419,7 @@ const skills = {
 			if (!target2) return;
 			target2.logSkill("jsrgzhengyi", player);
 			trigger.cancel();
-			await target.damage(trigger.source, trigger.nature, trigger.num).set("card", trigger.card).set("cards", trigger.cards);
+			await target2.damage(trigger.source, trigger.nature, trigger.num).set("card", trigger.card).set("cards", trigger.cards);
 		},
 		ai: {
 			combo: "jsrglirang",
