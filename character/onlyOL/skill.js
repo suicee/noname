@@ -156,14 +156,21 @@ const skills = {
 					],
 				])
 				.set("filterButton", function (button) {
+					var player = _status.event.player;
+					var handcard_num = player.countCards("h");
+					var hasEnemy = game.hasPlayer(current => get.attitude(player, current) < 0);
+					var have_sha = player.getCards("h").some(c => c.name == "sha");
+					var need_tao = player.countCards("h", "tao") > 0 && player.hp < 3;
+					var has_damage_trick_card = player.countCards("h", c => get.type(c) == "trick" && get.tag(c, "damage")) > 0;
+					var has_draw_trick_card = handcard_num > 2 && player.countCards("h", c => get.type(c) == "trick" && get.tag(c, "draw")) > 0;
 					if (button.link == "discard") {
-						return player.countCards("h");
+						return hasEnemy && have_sha && !need_tao && !has_damage_trick_card && !has_draw_trick_card;
 					}
 					return true;
 				});
 			event.result = {
 				bool: result.bool,
-				cost_data: result.links[0],
+				cost_data: result.links?.[0],
 			};
 		},
 		choice: {
@@ -172,7 +179,10 @@ const skills = {
 				const cards = next.cards;
 				if (!cards) return;
 				if (cards.some(c => c.name == "sha")) {
-					const { result } = await player.chooseTarget("对一名其他角色造成1点伤害").set("filterTarget", lib.filter.notMe);
+					const { result } = await player.chooseTarget("对一名其他角色造成1点伤害").set("filterTarget", lib.filter.notMe).set("ai", function (target) {
+						var player = _status.event.player;
+						return get.damageEffect(target, player, player);
+					});;
 					if (result.bool) {
 						result.targets[0].damage(player);
 					}
