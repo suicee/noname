@@ -1072,6 +1072,7 @@ const skills = {
 			await game.delayx();
 		},
 		updateBlocker(player) {
+			if (!player) return;
 			const list = [],
 				storage = player.storage.sbgongqi_block;
 			if (storage?.length) {

@@ -6926,6 +6926,7 @@ const skills = {
 			lib.skill.scschihe.updateBlocker(target);
 		},
 		updateBlocker(player) {
+			if (!player) return;
 			var list = [],
 				storage = player.storage.scschihe_block;
 			if (storage && storage.length) {
