@@ -2908,30 +2908,20 @@ const skills = {
 		},
 		targetprompt: ["先拿牌", "后拿牌"],
 		find(type) {
-			let list = game.filterPlayer(function (current) {
-				return current != player && get.attitude(player, current) > 3;
-			});
 			const player = _status.event.player;
-			const num = player.countCards("he", function (card) {
-				return get.value(card) < 7;
-			});
-			let count = null;
-			let from, nh;
+			let list = game.filterPlayer(current => current != player && get.attitude(player, current) > 3);
+			const num = player.countCards("he", card => get.value(card) < 7);
+			let count = null,
+				from,
+				nh;
 			if (list.length == 0) return null;
-			list.sort(function (a, b) {
-				return a.countCards("h") - b.countCards("h");
-			});
+			list.sort((a, b) => a.countCards("h") - b.countCards("h"));
 			if (type == 1) return list[0];
 			from = list[0];
 			nh = from.countCards("h");
-
-			list = game.filterPlayer(function (current) {
-				return current != player && get.attitude(player, current) < 1;
-			});
-			if (list.length == 0) return null;
-			list.sort(function (a, b) {
-				return b.countCards("h") - a.countCards("h");
-			});
+			list = game.filterPlayer(current => current != player && get.attitude(player, current) < 1);
+			if (!list.length) return null;
+			list.sort((a, b) => b.countCards("h") - a.countCards("h"));
 			for (let i = 0; i < list.length; i++) {
 				const nh2 = list[i].countCards("h");
 				if (nh2 - nh <= num) {
@@ -3333,7 +3323,7 @@ const skills = {
 					return 0;
 				})
 				.set("eff", eff);
-			if (result.bool == false) trigger.getParent().excluded.add(player);
+			if (!result?.bool) trigger.getParent().excluded.add(player);
 		},
 		ai: {
 			effect: {
@@ -4554,15 +4544,14 @@ const skills = {
 		unique: true,
 		trigger: { player: "damageEnd" },
 		frequent: true,
-		getIndex(event, player) {
+		getIndex: event => event.num,
+		filter(event) {
 			return event.num;
 		},
 		async content(event, trigger, player) {
 			lib.skill.huashen.addHuashens(player, 1);
 		},
-		ai: {
-			combo: "huashen",
-		},
+		ai: { combo: "huashen" },
 	},
 	huoshou: {
 		audio: "huoshou1",
@@ -5283,8 +5272,11 @@ const skills = {
 	},
 	benghuai: {
 		audio: 2,
-		audioname: ["re_dongzhuo", "ol_dongzhuo", "re_zhugedan"],
-		audioname2: { zhugedan: "benghuai_zhugedan" },
+		audioname: ["re_dongzhuo", "ol_dongzhuo"],
+		audioname2: {
+			zhugedan: "benghuai_zhugedan",
+			re_zhugedan: "benghuai_re_zhugedan",
+		},
 		trigger: { player: "phaseJieshuBegin" },
 		forced: true,
 		check() {
@@ -5369,7 +5361,7 @@ const skills = {
 			do {
 				currented.push(current);
 				current.addTempClass("target");
-				const bool = await current
+				const { result } = await current
 					.chooseToUse(
 						"乱武：使用一张杀或失去1点体力",
 						function (card) {
@@ -5394,9 +5386,8 @@ const skills = {
 					.set("ai2", function () {
 						return get.effect_use.apply(this, arguments) + 0.01;
 					})
-					.set("addCount", false)
-					.forResultBool();
-				if (!bool) await current.loseHp();
+					.set("addCount", false);
+				if (!result?.bool) await current.loseHp();
 				current = current.next;
 			} while (!currented.includes(current) && !void (await game.delay(0.5)));
 		},
@@ -6142,7 +6133,7 @@ const skills = {
 				str += "不为";
 				str += get.translation(colors[i]);
 			}
-			str += "的牌当做【决斗】使用";
+			str += "的手牌当做【决斗】使用";
 			return str;
 		},
 		check(card) {

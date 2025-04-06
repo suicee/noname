@@ -227,5 +227,14 @@ const cards = {
 		},
 		skills: ["xuanjian_skill"],
 	},
+	mbjianji_card: {
+		ai: {
+			basic: {
+				value: 1,
+			},
+		},
+		//image: 'image/card/mbjianji_card.png',
+		//fullimage: true,
+	},
 };
 export default cards;
