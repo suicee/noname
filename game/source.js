@@ -99,6 +99,7 @@ window.noname_source_list = [
 	"noname/ui/create/menu/pages/optionsMenu.js",
 	"noname/ui/create/menu/pages/otherMenu.js",
 	"noname/ui/create/menu/pages/startMenu.js",
+	"noname/ui/create/menu/views/index.vue",
 	"noname/util/browser.js",
 	"noname/util/config.js",
 	"noname/util/error.js",
