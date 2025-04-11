@@ -637,20 +637,22 @@ const skills = {
 			event.onEnd01 = function () {
 				_status.old_guhuoNode.removeEventListener("webkitTransitionEnd", _status.event.onEnd01);
 				setTimeout(function () {
-					_status.old_guhuoNode.style.transition = "all ease-in 0.3s";
-					_status.old_guhuoNode.style.transform = "perspective(600px) rotateY(270deg)";
-					var onEnd = function () {
-						_status.old_guhuoNode.classList.remove("infohidden");
-						_status.old_guhuoNode.style.transition = "all 0s";
-						ui.refresh(_status.old_guhuoNode);
-						_status.old_guhuoNode.style.transform = "perspective(600px) rotateY(-90deg)";
-						ui.refresh(_status.old_guhuoNode);
-						_status.old_guhuoNode.style.transition = "";
-						ui.refresh(_status.old_guhuoNode);
-						_status.old_guhuoNode.style.transform = "";
-						_status.old_guhuoNode.removeEventListener("webkitTransitionEnd", onEnd);
-					};
-					_status.old_guhuoNode.listenTransition(onEnd);
+					if (_status.old_guhuoNode) {
+						_status.old_guhuoNode.style.transition = "all ease-in 0.3s";
+						_status.old_guhuoNode.style.transform = "perspective(600px) rotateY(270deg)";
+						var onEnd = function () {
+							_status.old_guhuoNode.classList.remove("infohidden");
+							_status.old_guhuoNode.style.transition = "all 0s";
+							ui.refresh(_status.old_guhuoNode);
+							_status.old_guhuoNode.style.transform = "perspective(600px) rotateY(-90deg)";
+							ui.refresh(_status.old_guhuoNode);
+							_status.old_guhuoNode.style.transition = "";
+							ui.refresh(_status.old_guhuoNode);
+							_status.old_guhuoNode.style.transform = "";
+							_status.old_guhuoNode.removeEventListener("webkitTransitionEnd", onEnd);
+						};
+						_status.old_guhuoNode.listenTransition(onEnd);
+					}
 				}, 300);
 			};
 			if (!event.targets.length) event.goto(3);

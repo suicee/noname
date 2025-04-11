@@ -431,7 +431,10 @@ game.import("card", function () {
 									? 3.2
 									: 1;
 						},
-						value: 4,
+						value(card, player, i) {
+							if (_status.currentPhase != player && player.hp + player.hujia < 2 && player.countCards("hs", ["tao", "jiu", "shan", "wuxie"]) <= 2) return 1;
+							return 4;
+						}
 					},
 					result: {
 						target(player, target) {

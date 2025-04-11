@@ -5602,10 +5602,10 @@ export class Game extends GameCompatible {
 					dialog.add('<div class="text center">' + get.translation(game.players[i]) + "</div>");
 					dialog.addSmall(hs);
 				}
-				let muniu=game.players[i].getEquip('muniu');
-				if(muniu&&muniu.cards&&muniu.cards.length){
+				let muniu=game.players[i].getVEquip('muniu');
+				if(muniu&&muniu.storages&&muniu.storages.length){
 					dialog.add('<div class="text center">'+get.translation(game.players[i])+'的'+get.translation('muniu')+'</div>');
-					dialog.addSmall(muniu.cards);
+					dialog.addSmall(muniu.storages);
 				}
 			}
 
@@ -5615,10 +5615,10 @@ export class Game extends GameCompatible {
 					dialog.add('<div class="text center">' + get.translation(game.dead[j]) + "</div>");
 					dialog.addSmall(hs);
 				}
-				let muniu=game.dead[j].getEquip('muniu');
-				if(muniu&&muniu.cards&&muniu.cards.length){
+				let muniu=game.dead[j].getVEquip('muniu');
+				if(muniu&&muniu.storages&&muniu.storages.length){
 					dialog.add('<div class="text center">'+get.translation(game.dead[j])+'的'+get.translation('muniu')+'</div>');
-					dialog.addSmall(muniu.cards);
+					dialog.addSmall(muniu.storages);
 				}
 			}
 
@@ -6006,10 +6006,10 @@ export class Game extends GameCompatible {
 				dialog.add('<div class="text center">' + get.translation(game.players[i]) + "</div>");
 				dialog.addSmall(hs);
 			}
-			let muniu=game.players[i].getEquip('muniu');
-			if(muniu&&muniu.cards&&muniu.cards.length){
+			let muniu=game.players[i].getVEquip('muniu');
+			if(muniu&&muniu.storages&&muniu.storages.length){
 				dialog.add('<div class="text center">'+get.translation(game.players[i])+'的'+get.translation('muniu')+'</div>');
-				dialog.addSmall(muniu.cards);
+				dialog.addSmall(muniu.storages);
 			}
 		}
 		for (let i = 0; i < game.dead.length; i++) {
@@ -6019,10 +6019,10 @@ export class Game extends GameCompatible {
 				dialog.add('<div class="text center">' + get.translation(game.dead[i]) + "</div>");
 				dialog.addSmall(hs);
 			}
-			let muniu=game.dead[i].getEquip('muniu');
-			if(muniu&&muniu.cards&&muniu.cards.length){
+			let muniu=game.dead[i].getVEquip('muniu');
+			if(muniu&&muniu.storages&&muniu.storages.length){
 				dialog.add('<div class="text center">'+get.translation(game.dead[i])+'的'+get.translation('muniu')+'</div>');
-				dialog.addSmall(muniu.cards);
+				dialog.addSmall(muniu.storages);
 			}
 		}
 		dialog.add(ui.create.div(".placeholder.slim"));

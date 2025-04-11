@@ -759,7 +759,10 @@ export default () => {
 				nopower: true,
 				unique: true,
 				ai: {
-					equipValue: 9,
+					equipValue(card, player) {
+						if (get.mode() != "boss" && player.getEquips(1).length > 0 && player.getEnemies().length < 2) return 0;
+						return 9;
+					},
 				},
 			},
 			longfenghemingjian: {
