@@ -426,12 +426,11 @@ game.import("card", function () {
 						content() {
 							trigger.cards.removeArray(player.getEquips("shangfangbaojian"));
 						},
-						mod: {
-							canBeDiscarded(card, source, player) {
-								if (player.getEquips("shangfangbaojian").includes(card)) return false;
-							},
-							cardDiscardable(card, player) {
-								if (player.getEquips("shangfangbaojian").includes(card)) return false;
+						ai: {
+							effect: {
+								target: (card, player, target) => {
+									if (get.tag(card, "discard")) return get.attitude(player, target);
+								},
 							},
 						},
 					},

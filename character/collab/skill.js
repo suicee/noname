@@ -1268,7 +1268,7 @@ const skills = {
 		},
 		ai: {
 			order: 20,
-			result: { player: player => 1 - (player.hasSkill("dcbeijin_buff") && player.hasCard(card => card.hasGaintag("dcbeijin_effect"), "h")) },
+			result: { player: player => (player.hp < 3 || player.hasCard(card => card.hasGaintag("dcbeijin_effect"), "h")) ? 0 : 1 },
 		},
 		locked: false,
 		mod: {

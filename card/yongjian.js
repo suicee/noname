@@ -639,6 +639,7 @@ game.import("card", function () {
 						ai1(card) {
 							var player = get.player();
 							if (["usedu", "keepdu"].some(tag => player.hasSkillTag(tag)) || get.effect(player, { name: "losehp" }, player, player) > 0) return 0;
+							if (get.mode() === "identity" && player.identity !== "zhu" && player.identity !== "zhong" && game.roundNumber == 0) return 0;
 							if (!ui.selected.cards.length) return 1;
 							return 0;
 						},

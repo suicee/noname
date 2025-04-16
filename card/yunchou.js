@@ -371,6 +371,7 @@ game.import("card", function () {
 						event.current
 							.chooseBool("是否响应" + get.translation(target) + "的舌战群儒？", function (event, player) {
 								if (get.attitude(player, _status.event.source) >= 0) return false;
+								if (get.mode() === "identity" && player.identity == "fan" && game.roundNumber == 1 && _status.currentPhase.identity == "zhu") return false;
 								var hs = player.getCards("h");
 								var dutag = player.hasSkillTag("nodu");
 								for (var i = 0; i < hs.length; i++) {
