@@ -614,6 +614,7 @@ game.import("card", function () {
 						thunderDamage: 1,
 						natureDamage: 1,
 						loseCard: 1,
+						discard: 1,
 					},
 					yingbian(card, player, targets, viewer) {
 						if (get.attitude(viewer, player) <= 0) return 0;

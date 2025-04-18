@@ -214,7 +214,7 @@ game.import("card", function () {
 								val+=get.equipValue(cards[i]);
 							}
 							if (target.getEquip('tianjitu')&&target.getCards('h').length<=5&&cards.length<=3) return 2-target.getCards('h').length;
-							for (var card of js) val -= get.effect(target, card.viewAs ? { name: card.viewAs } : card, target, player);
+							for (var card of js) val += get.effect(target, card.viewAs ? { name: card.viewAs } : card, target, player);
 							return -val;
 						},
 					},
