@@ -11,7 +11,7 @@ const skills = {
 		},
 		filter(event, player) {
 			if (event.twfushu) return false; // || event.name != "chooseToUse"
-			return event.filterCard({ name: "tao", isCard: true }, player, event) && player.countCards("h") && !player.hasSkillTag("noCompareSource");
+			return event.filterCard && event.filterCard({ name: "tao", isCard: true }, player, event) && player.countCards("h") && !player.hasSkillTag("noCompareSource");
 		},
 		filterCard: () => true,
 		selectCard: 1,
