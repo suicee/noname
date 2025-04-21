@@ -11824,40 +11824,42 @@ export class Player extends HTMLDivElement {
 			if (this.$gainmod) {
 				this.$gainmod(card);
 			} else {
-				var node;
-				if (get.itemtype(card) == "card") {
-					node = card.copy("thrown", false);
-				} else {
-					node = ui.create.div(".card.thrown");
-					node.moveTo = lib.element.Card.prototype.moveTo;
-					node.moveDelete = lib.element.Card.prototype.moveDelete;
-				}
-				if (cardsetion) {
-					var next = ui.create.div(".cardsetion", cardsetion, node);
-					next.style.setProperty("display", "block", "important");
-					if (node.node) {
-						if (node.node.cardsetion) {
-							node.node.cardsetion.remove();
-							delete node.node.cardsetion;
-						}
-						node.node.cardsetion = next;
+				if (!window.decadeUI) {
+					var node;
+					if (get.itemtype(card) == "card") {
+						node = card.copy("thrown", false);
+					} else {
+						node = ui.create.div(".card.thrown");
+						node.moveTo = lib.element.Card.prototype.moveTo;
+						node.moveDelete = lib.element.Card.prototype.moveDelete;
 					}
+					if (cardsetion) {
+						var next = ui.create.div(".cardsetion", cardsetion, node);
+						next.style.setProperty("display", "block", "important");
+						if (node.node) {
+							if (node.node.cardsetion) {
+								node.node.cardsetion.remove();
+								delete node.node.cardsetion;
+							}
+							node.node.cardsetion = next;
+						}
+					}
+					node.fixed = true;
+					node.style.left = "calc(50% - 52px " + (Math.random() - 0.5 < 0 ? "+" : "-") + " " + Math.random() * 100 + "px)";
+					node.style.top = "calc(50% - 52px " + (Math.random() - 0.5 < 0 ? "+" : "-") + " " + Math.random() * 100 + "px)";
+					node.style.transform = "scale(0)";
+					node.hide();
+					ui.arena.appendChild(node);
+					ui.refresh(node);
+					node.show();
+					node.style.transform = "";
+	
+					lib.listenEnd(node);
+					var player = this;
+					setTimeout(function () {
+						node.moveDelete(player);
+					}, 700);
 				}
-				node.fixed = true;
-				node.style.left = "calc(50% - 52px " + (Math.random() - 0.5 < 0 ? "+" : "-") + " " + Math.random() * 100 + "px)";
-				node.style.top = "calc(50% - 52px " + (Math.random() - 0.5 < 0 ? "+" : "-") + " " + Math.random() * 100 + "px)";
-				node.style.transform = "scale(0)";
-				node.hide();
-				ui.arena.appendChild(node);
-				ui.refresh(node);
-				node.show();
-				node.style.transform = "";
-
-				lib.listenEnd(node);
-				var player = this;
-				setTimeout(function () {
-					node.moveDelete(player);
-				}, 700);
 			}
 		}
 	}
