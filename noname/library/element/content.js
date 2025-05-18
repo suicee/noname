@@ -8790,6 +8790,10 @@ player.removeVirtualEquip(card);
 			var sort;
 			var frag1 = document.createDocumentFragment();
 			var frag2 = document.createDocumentFragment();
+			if (window.decadeUI) {
+				var handcards = player.node.handcards1;
+				var fragment = document.createDocumentFragment();
+			}
 			var hs = player.getCards("hs");
 			for (var i = 0; i < cards.length; i++) {
 				if (hs.includes(cards[i])) {
@@ -8803,11 +8807,12 @@ player.removeVirtualEquip(card);
 					cards[num].addKnower("everyone");
 				}
 				cards[num].fix();
-				cards[num].style.transform = "";
+				if (!window.decadeUI) cards[num].style.transform = "";
 				event.gaintag.forEach(tag => cards[num].addGaintag(tag));
 				if (event.knowers) {
 					cards[num].addKnower(event.knowers); //添加事件设定的知情者。
 				}
+				if (window.decadeUI) fragment.insertBefore(cards[num], fragment.firstChild);
 				if (_status.discarded) {
 					_status.discarded.remove(cards[num]);
 				}
@@ -8817,17 +8822,21 @@ player.removeVirtualEquip(card);
 						cards[num].vanishtag.splice(num2--, 1);
 					}
 				}
-				if (player == game.me) {
-					cards[num].classList.add("drawinghidden");
+				if (!window.decadeUI) {
+					if (player == game.me) {
+						cards[num].classList.add("drawinghidden");
+					}
+					if (get.is.singleHandcard() || sort > 1) frag1.appendChild(cards[num]);
+					else frag2.appendChild(cards[num]);
 				}
-				if (get.is.singleHandcard() || sort > 1) frag1.appendChild(cards[num]);
-				else frag2.appendChild(cards[num]);
 			}
-			var addv = function () {
-				if (player == game.me) {
-					game.addVideo("gain12", player, [get.cardsInfo(frag1.childNodes), get.cardsInfo(frag2.childNodes), event.gaintag]);
-				}
-			};
+			if (!window.decadeUI) {
+				var addv = function () {
+					if (player == game.me) {
+						game.addVideo("gain12", player, [get.cardsInfo(frag1.childNodes), get.cardsInfo(frag2.childNodes), event.gaintag]);
+					}
+				};
+			}
 			var broadcast = function () {
 				game.broadcast(
 					function (player, cards, num, gaintag) {
@@ -8840,45 +8849,84 @@ player.removeVirtualEquip(card);
 					event.gaintag
 				);
 			};
+			if (window.decadeUI) {
+				var gainTo = function (cards, nodelay) {
+					cards.duiMod = event.source;
+					if (player == game.me) {
+						dui.layoutHandDraws(cards.reverse());
+						dui.queueNextFrameTick(dui.layoutHand, dui);
+						game.addVideo('gain12', player, [get.cardsInfo(fragment.childNodes), event.gaintag]);
+					}
+	
+					var s = player.getCards('s');
+					if (s.length)
+						handcards.insertBefore(fragment, s[0]);
+					else
+						handcards.appendChild(fragment);
+	
+					broadcast();
+	
+					if (nodelay !== true) {
+						setTimeout(function (player) {
+							player.update();
+							game.resume();
+						}, get.delayx(400, 400) + 66, player);
+					} else {
+						player.update();
+					}
+				};
+			}
 			if (event.animate == "draw") {
 				player.$draw(cards.length);
 				game.pause();
-				setTimeout(function () {
-					addv();
-					player.node.handcards1.insertBefore(frag1, player.node.handcards1.firstChild);
-					player.node.handcards2.insertBefore(frag2, player.node.handcards2.firstChild);
-					player.update();
-					if (player == game.me) ui.updatehl();
-					broadcast();
-					game.resume();
-				}, get.delayx(500, 500));
+				if (window.decadeUI) {
+					gainTo(cards);
+				} else {
+					setTimeout(function () {
+						addv();
+						player.node.handcards1.insertBefore(frag1, player.node.handcards1.firstChild);
+						player.node.handcards2.insertBefore(frag2, player.node.handcards2.firstChild);
+						player.update();
+						if (player == game.me) ui.updatehl();
+						broadcast();
+						game.resume();
+					}, get.delayx(500, 500));
+				}
 			} else if (event.animate == "gain") {
 				player.$gain(cards, event.log);
 				game.pause();
-				setTimeout(function () {
-					addv();
-					player.node.handcards1.insertBefore(frag1, player.node.handcards1.firstChild);
-					player.node.handcards2.insertBefore(frag2, player.node.handcards2.firstChild);
-					player.update();
-					if (player == game.me) ui.updatehl();
-					broadcast();
-					game.resume();
-				}, get.delayx(700, 700));
+				if (window.decadeUI) {
+					gainTo(cards);
+				} else {
+					setTimeout(function () {
+						addv();
+						player.node.handcards1.insertBefore(frag1, player.node.handcards1.firstChild);
+						player.node.handcards2.insertBefore(frag2, player.node.handcards2.firstChild);
+						player.update();
+						if (player == game.me) ui.updatehl();
+						broadcast();
+						game.resume();
+					}, get.delayx(700, 700));
+				}
 			} else if (event.animate == "gain2" || event.animate == "draw2") {
 				var gain2t = 300;
 				if (player.$gain2(cards, event.log) && player == game.me) {
 					gain2t = 500;
 				}
 				game.pause();
-				setTimeout(function () {
-					addv();
-					player.node.handcards1.insertBefore(frag1, player.node.handcards1.firstChild);
-					player.node.handcards2.insertBefore(frag2, player.node.handcards2.firstChild);
-					player.update();
-					if (player == game.me) ui.updatehl();
-					broadcast();
-					game.resume();
-				}, get.delayx(gain2t, gain2t));
+				if (window.decadeUI) {
+					gainTo(cards);
+				} else {
+					setTimeout(function () {
+						addv();
+						player.node.handcards1.insertBefore(frag1, player.node.handcards1.firstChild);
+						player.node.handcards2.insertBefore(frag2, player.node.handcards2.firstChild);
+						player.update();
+						if (player == game.me) ui.updatehl();
+						broadcast();
+						game.resume();
+					}, get.delayx(gain2t, gain2t));
+				}
 			} else if (event.animate == "give" || event.animate == "giveAuto") {
 				var evtmap = event.losing_map;
 				if (event.animate == "give") {
@@ -8894,39 +8942,51 @@ player.removeVirtualEquip(card);
 					}
 				}
 				game.pause();
-				setTimeout(function () {
-					addv();
-					player.node.handcards1.insertBefore(frag1, player.node.handcards1.firstChild);
-					player.node.handcards2.insertBefore(frag2, player.node.handcards2.firstChild);
-					player.update();
-					if (player == game.me) ui.updatehl();
-					broadcast();
-					game.resume();
-				}, get.delayx(500, 500));
+				if (window.decadeUI) {
+					gainTo(cards);
+				} else {
+					setTimeout(function () {
+						addv();
+						player.node.handcards1.insertBefore(frag1, player.node.handcards1.firstChild);
+						player.node.handcards2.insertBefore(frag2, player.node.handcards2.firstChild);
+						player.update();
+						if (player == game.me) ui.updatehl();
+						broadcast();
+						game.resume();
+					}, get.delayx(500, 500));
+				}
 			} else if (typeof event.animate == "function") {
 				var time = event.animate(event);
 				game.pause();
-				setTimeout(function () {
+				if (window.decadeUI) {
+					gainTo(cards);
+				} else {
+					setTimeout(function () {
+						addv();
+						player.node.handcards1.insertBefore(frag1, player.node.handcards1.firstChild);
+						player.node.handcards2.insertBefore(frag2, player.node.handcards2.firstChild);
+						player.update();
+						if (player == game.me) ui.updatehl();
+						broadcast();
+						game.resume();
+					}, get.delayx(time, time));
+				}
+			} else {
+				if (window.decadeUI) {
+					gainTo(cards, true);
+				} else {
 					addv();
 					player.node.handcards1.insertBefore(frag1, player.node.handcards1.firstChild);
 					player.node.handcards2.insertBefore(frag2, player.node.handcards2.firstChild);
 					player.update();
 					if (player == game.me) ui.updatehl();
 					broadcast();
-					game.resume();
-				}, get.delayx(time, time));
-			} else {
-				addv();
-				player.node.handcards1.insertBefore(frag1, player.node.handcards1.firstChild);
-				player.node.handcards2.insertBefore(frag2, player.node.handcards2.firstChild);
-				player.update();
-				if (player == game.me) ui.updatehl();
-				broadcast();
+				}
 				event.finish();
 			}
 		},
 		async (event, trigger, player) => {
-			game.delayx();
+			if (!window.decadeUI) game.delayx();
 			if (event.updatePile) game.updateRoundNumber();
 		},
 	],

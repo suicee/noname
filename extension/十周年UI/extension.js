@@ -1637,63 +1637,6 @@ game.import('extension', async function(lib, game, ui, get, ai, _status){
 						/for\(var i=0;i<cards\.length;i\+\+\){\s*player\.\$throw\(cards\[i\]\);[\s\S]*},cards\);\s*}/,
 						(player, cards) => player.$throw(cards)
 					);
-					Mixin.replace(
-						'lib.element.content.gain',
-						/\s*var\s*sort\s*;[\s\S]*=\s*document\s*\.\s*createDocumentFragment\s*\(\s*\)\s*;/,
-						player => {
-							var handcards = player.node.handcards1;
-							var fragment = document.createDocumentFragment();
-						},
-						/\s*sort\s*=\s*lib\s*\.\s*config\s*\.\s*sort_card\s*\(\s*cards\s*\[\s*num\s*\]\s*\)\s*;\s*if\s*\(\s*lib\s*\.\s*config\s*\.\s*reverse_sort\s*\)\s*sort\s*=-\s*sort\s*;/,
-						'',
-						/\s*cards\s*\[\s*num\s*\]\s*\.\s*style\s*\.\s*transform\s*=\s*""\s*;/,
-						'',
-						/(?=\s*if\s*\(\s*_status\s*\.\s*discarded\s*\)\s*{)/,
-						(fragment, cards, num) => {
-							fragment.insertBefore(cards[num], fragment.firstChild);
-						},
-						/\s*if\s*\(\s*player\s*==\s*game\s*\.\s*me\s*\)\s*{[\s\S]*else\s*frag2\s*\.\s*appendChild\s*\(\s*cards\s*\[\s*num\s*\]\s*\)\s*;/,
-						'',
-						/\s*var\s*addv\s*=\s*function\s*\(\s*\)\s*{[\s\S]*?}\s*;/,
-						'',
-						/(?=\s*if\s*\(\s*event\s*\.\s*animate\s*==\s*"draw"\s*\)\s*{)/,
-						(event, player, dui, fragment, handcards, broadcast) => {
-							var gainTo = function (cards, nodelay) {
-								cards.duiMod = event.source;
-								if (player == game.me) {
-									dui.layoutHandDraws(cards.reverse());
-									dui.queueNextFrameTick(dui.layoutHand, dui);
-									game.addVideo('gain12', player, [get.cardsInfo(fragment.childNodes), event.gaintag]);
-								}
-
-								var s = player.getCards('s');
-								if (s.length)
-									handcards.insertBefore(fragment, s[0]);
-								else
-									handcards.appendChild(fragment);
-
-								broadcast();
-
-								if (nodelay !== true) {
-									setTimeout(function (player) {
-										player.update();
-										game.resume();
-									}, get.delayx(400, 400) + 66, player);
-								} else {
-									player.update();
-								}
-							};
-						},
-						/\s*setTimeout\s*\(\s*function\s*\(\s*\)\s*{[\s\S]*?}\s*,\s*get\s*\.\s*delayx\s*\([\s\S]*?,\s*[\s\S]*?\s*\)\s*\)\s*;/g,
-						(gainTo, cards) => {
-							gainTo(cards);
-						},
-						/\s*addv\s*\(\s*\)\s*;[\s\S]*?broadcast\s*\(\s*\)\s*;/,
-						(gainTo, cards) => {
-							gainTo(cards, true);
-						},
-						/\s*game\s*\.\s*delayx\s*\(\s*\)\s*;(?=\s*if\s*\(\s*event\s*\.\s*updatePile\s*\)\s*game\s*\.\s*updateRoundNumber\s*\(\s*\)\s*;)/
-					);
 					lib.element.Player = class extends lib.element.Player {
 						constructor(){
 							let player = super(...arguments);
