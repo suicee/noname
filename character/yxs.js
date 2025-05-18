@@ -661,18 +661,11 @@ game.import("character", function () {
 				},
 			},
 			yixin: {
+				limited: true,
 				skillAnimation: true,
-				unique: true,
-				mark: true,
-				init(player) {
-					player.storage.yixin = false;
-				},
 				enable: "phaseUse",
 				filter(event, player) {
-					return !player.storage.yixin && player.countCards("he") > 2;
-				},
-				intro: {
-					content: "limited",
+					return player.countCards("he") > 2;
 				},
 				filterTarget(card, player, target) {
 					return target.isDamaged();
@@ -684,8 +677,7 @@ game.import("character", function () {
 					return 7 - get.value(card);
 				},
 				content() {
-					player.awakenSkill("yixin");
-					player.storage.yixin = true;
+					player.awakenSkill(event.name);
 					var num = Math.min(4, target.maxHp - target.hp);
 					target.recover(num);
 					if (num < 4) {
@@ -1519,6 +1511,7 @@ game.import("character", function () {
 				},
 			},
 			heqin: {
+				limited: true,
 				skillAnimation: true,
 				enable: "phaseUse",
 				filter(event, player) {
@@ -1528,7 +1521,7 @@ game.import("character", function () {
 					return target.sex == "male" && target != player;
 				},
 				content() {
-					player.awakenSkill("heqin");
+					player.awakenSkill(event.name);
 					player.addSkill("heqin2");
 					target.addSkill("heqin2");
 
@@ -2231,24 +2224,13 @@ game.import("character", function () {
 				},
 			},
 			seyou: {
+				limited: true,
 				skillAnimation: true,
-				unique: true,
-				mark: true,
-				init(player) {
-					player.storage.seyou = false;
-				},
 				enable: "phaseUse",
-				filter(event, player) {
-					return !player.storage.seyou;
-				},
-				intro: {
-					content: "limited",
-				},
 				filterTarget: true,
 				content() {
 					"step 0";
-					player.awakenSkill("seyou");
-					player.storage.seyou = true;
+					player.awakenSkill(event.name);
 					event.targets = game.filterPlayer();
 					event.targets.remove(player);
 					event.targets.remove(target);
@@ -2968,13 +2950,12 @@ game.import("character", function () {
 				enable: "phaseUse",
 				usable: 1,
 				filterTarget(card, player, target) {
-					return player != target && target.countCards("e") > 0;
+					return player != target && target.countCards("e");
 				},
-				content() {
-					"step 0";
-					player.discardPlayerCard(target, "e", true);
-					"step 1";
-					game.asyncDraw([player, target]);
+				async content(event, trigger, player) {
+					const { target } = event;
+					await player.discardPlayerCard(target, "e", true);
+					await game.asyncDraw([player, target].sortBySeat());
 				},
 				ai: {
 					order: 8,
@@ -2989,9 +2970,7 @@ game.import("character", function () {
 				enable: "phaseUse",
 				usable: 1,
 				filterTarget(card, player, target) {
-					return target.hasCard(function (card) {
-						return !get.info(card).unique;
-					}, "e");
+					return target.hasCard(card => !get.info(card)?.unique, "e");
 				},
 				check(card) {
 					return 6 - get.value(card);
@@ -3003,38 +2982,32 @@ game.import("character", function () {
 				},
 				discard: false,
 				lose: false,
-				content() {
-					"step 0";
-					var next = player.choosePlayerCard(target, "e", true);
+				async content(event, trigger, player) {
+					const { target, cards } = event;
+					let result;
+					const next = player.choosePlayerCard(target, "e", true);
 					next.ai = get.buttonValue;
-					next.filterButton = function (button) {
-						return !get.info(button.link).unique;
+					next.filterButton = button => {
+						return !get.info(button.link)?.unique;
 					};
-					"step 1";
-					if (result.bool) {
-						event.card = get.autoViewAs({ name: result.links[0].name }, event.cards);
-						player
-							.chooseTarget("神工：选择一个角色装备" + get.translation(event.card) + "（" + get.translation(event.cards) + "）", function (card, player, target) {
-								return target.canEquip(get.event().getParent().card, true);
-							})
-							.set("ai", target => {
-								const card = get.event().getParent().card;
-								return get.equipValue(card, target) * get.attitude(get.player(), target);
-							});
-					} else {
-						event.finish();
-					}
-					"step 2";
-					if (result.targets && result.targets[0] && event.card) {
-						player.$give(event.card, result.targets[0]);
-						game.delay();
-						event.toequip = result.targets[0];
-					} else {
-						event.finish();
-					}
-					"step 3";
-					if (event.toequip) {
-						event.toequip.equip(event.card);
+					result = await next.forResult();
+					if (!result?.bool || !result?.links?.length) return;
+					const card = get.autoViewAs({ name: result.links[0].name }, cards);
+					result = await player
+						.chooseTarget(`神工：选择一个角色装备${get.translation(card)}（${get.translation(cards)}）`, (card, player, target) => {
+							return target.canEquip(get.event("cardx"), true);
+						})
+						.set("ai", target => {
+							const { player, cardx } = get.event();
+							return get.equipValue(cardx, target) * get.attitude(player, target);
+						})
+						.set("cardx", card)
+						.forResult();
+					if (result?.targets?.length) {
+						const [toequip] = result.targets;
+						player.$give(card, result.targets[0]);
+						await game.delay();
+						await toequip.equip(card);
 					}
 				},
 				ai: {
@@ -3211,9 +3184,9 @@ game.import("character", function () {
 			xumou: "蓄谋",
 			xumou_info: "结束阶段，你可以将武将牌翻面并摸三张牌。",
 			guifu: "鬼斧",
-			guifu_info: "出牌阶段限一次，你可以指定一名角色装备区内的一张牌，将其弃掉，自己和对方同时摸取一张牌。",
+			guifu_info: "出牌阶段限一次，你可以弃置一名角色装备区内的一张牌，并与其各摸一张牌。",
 			lshengong: "神工",
-			lshengong_info: "出牌阶段限一次，你可以选定场上任意一名角色的装备区的非特殊牌，出自己的一张手牌复制该装备，然后可以选择装备上自己或者别的角色的装备区。",
+			lshengong_info: "出牌阶段限一次，你可以选择一张手牌复制一名角色装备区的一张非特殊牌牌，然后你可以将以此法复制的装备置入一名角色的装备区。",
 			zhexian: "谪仙",
 			zhexian_info: "当你于一名其他角色的回合内首次失去牌时，你可以摸一张牌。",
 			miaobi: "妙笔",

@@ -3092,6 +3092,7 @@ game.import("card", function () {
 				equipSkill: true,
 				trigger: { global: "judgeBefore" },
 				direct: true,
+				locked: true,
 				content() {
 					"step 0";
 					event.cards = get.cards(2);
@@ -4097,6 +4098,7 @@ game.import("card", function () {
 			hslingjian_chaofeng: {
 				global: "hslingjian_chaofeng_disable",
 				nopop: true,
+				locked: true,
 				unique: true,
 				gainable: true,
 				mark: true,

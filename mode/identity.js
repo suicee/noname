@@ -4038,6 +4038,8 @@ export default () => {
 					if (get.population("zhong") == 0 && player.identity == "fan") return false;
 					return Math.abs(get.attitude(player, event.player)) <= 1;
 				},
+				charlotte: true,
+				ruleSkill: true,
 				content: () => {
 					player.changeFury(-1, true);
 					player.insightInto(trigger.player);
@@ -4168,6 +4170,8 @@ export default () => {
 				filter: function (event, player) {
 					return player.identity == "rYe" || player.identity == "bYe";
 				},
+				charlotte: true,
+				ruleSkill: true,
 				skillAnimation: "legend",
 				animationColor: "thunder",
 				content: function () {
@@ -4196,6 +4200,7 @@ export default () => {
 				},
 				trigger: { player: "phaseZhunbeiBegin" },
 				silent: true,
+				charlotte: true,
 				content: function () {
 					"step 0";
 					var cards = get.cards(3);
@@ -4263,6 +4268,7 @@ export default () => {
 						return num + 1;
 					},
 				},
+				charlotte: true,
 			},
 			identity_zeishou: {
 				name: "贼首",
@@ -4275,6 +4281,7 @@ export default () => {
 						return num - 1;
 					},
 				},
+				charlotte: true,
 			},
 			dongcha: {
 				trigger: { player: "phaseBegin" },
@@ -4285,6 +4292,7 @@ export default () => {
 						return current.countCards("ej");
 					});
 				},
+				charlotte: true,
 				forceunique: true,
 				content: function () {
 					"step 0";
@@ -4376,6 +4384,7 @@ export default () => {
 				trigger: { global: "dieBefore" },
 				forced: true,
 				unique: true,
+				charlotte: true,
 				forceunique: true,
 				filter: function (event, player) {
 					return event.player == game.zhu && player.hp > 0;
