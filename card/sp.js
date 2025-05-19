@@ -179,7 +179,9 @@ game.import("card", function () {
 				effect() {
 					"step 0";
 					if (result.bool == false) {
-						var card = cards[0];
+						if (cards && cards.length > 0) {
+							var card = cards[0];
+						}
 						if (card) {
 							if (!card.storage.fulei) {
 								card.storage.fulei = 1;
