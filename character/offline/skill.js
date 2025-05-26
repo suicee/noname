@@ -369,6 +369,7 @@ const skills = {
 					}
 					if (_status._zombieshibian) return;
 					_status.zombieshibian = true;
+					/*
 					//检测游戏胜负
 					if (typeof game.checkResult === "function") {
 						const origin_checkResult = game.checkResult;
@@ -423,6 +424,7 @@ const skills = {
 						lib.element.player.isFriendOf = isFriendOf;
 						[...game.players, ...game.dead].forEach(i => (i.isFriendOf = isFriendOf));
 					}
+					*/
 				},
 				player,
 				target
