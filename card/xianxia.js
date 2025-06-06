@@ -215,6 +215,7 @@ game.import("card", function () {
 					},
 					result: {
 						target(player, target) {
+							if (target.hasSkill("dctianji")) return 3;
 							var num = game.countPlayer(function (current) {
 								for (var j = 0; j < current.skills.length; j++) {
 									var rejudge = get.tag(current.skills[j], "rejudge", current);

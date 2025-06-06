@@ -351,6 +351,7 @@ game.import("card", function () {
 					},
 					result: {
 						target(player, target) {
+							if (target.hasSkill("dctianji")) return 3 * game.players.length;
 							return -1;
 						},
 					},
