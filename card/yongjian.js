@@ -12,7 +12,7 @@ game.import("card", function () {
 				ai: {
 					value: function(card,player,i) {
 						if (player.hp<=1&&_status.currentPhase==player&&_status.event.getParent('phaseUse').name=='phaseUse'
-						&&_status.event.name!='chooseButton'&&_status.event.name!='chooseCard'){
+						&&_status.event.name!='chooseButton'&&_status.event.name!='chooseCard'&&_status.event.name!='chooseToGive'){
 							return 100;
 						}
 						for (var i=0;i<10;i++){
@@ -131,7 +131,10 @@ game.import("card", function () {
 						const num = result.cards.length,
 							he = player.getCards("he");
 						if (!he.length) return;
-						await player.chooseToGive(target, Math.min(he.length, num), `交给${get.translation(target)}${get.cnNumber(num)}张牌`, "he", true);
+						await player.chooseToGive(target, Math.min(he.length, num), `交给${get.translation(target)}${get.cnNumber(num)}张牌`, "he", true)
+						.set("ai", card => {
+							return 6 - get.value(card);
+						});
 					}
 				},
 				ai: {
@@ -153,7 +156,8 @@ game.import("card", function () {
 								})>0) return 0;
 								return (
 									(target.countCards("he", function (card) {
-										return get.equipValue(card) > 0 && card != target.getEquip("jinhe");
+										if (get.position(card) == "e") return get.equipValue(card) > 0;
+										return get.value(card, target) > 0 && card != target.getEquip("jinhe");
 									}) > 0
 										? -0.3
 										: 0.3) * Math.sqrt(player.countCards("h"))

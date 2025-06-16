@@ -702,7 +702,9 @@ const skills = {
 			},
 			select: [1, Infinity],
 			check: button => {
-				return get.value(button.link);
+				let player = get.player();
+				if (ui.selected.buttons.length < player.hp) return get.value(button.link);
+				return 0;
 			},
 			backup: links => {
 				return {
