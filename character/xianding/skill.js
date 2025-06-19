@@ -9352,7 +9352,8 @@ const skills = {
 			event.result = yield map.player.chooseTarget(get.prompt2("dc_zj_b"), lib.filter.notMe).set("ai", target => {
 				var player = _status.event.player;
 				if (!player.hasFriend()) return 0;
-				return -game.countPlayer(current => current.inRange(target) && get.attitude(current, target) < 0 && get.damageEffect(target, current, current) > 0);
+				if (get.attitude(player, target) < 0 && get.damageEffect(target, player, player) > 0) return 1;
+				return 0;
 			});
 		},
 		*content(event, map) {

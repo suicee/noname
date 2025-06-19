@@ -184,12 +184,32 @@ game.import("card", function () {
 					},
 					result: {
 						player(player, target) {
+							for (var i = 0; i < game.players.length; i++) {
+								if (get.attitude(player, game.players[i]) <= 0 && game.players[i].hasSkill('dclaoyan')) return 0;
+							}
+							if (game.players.length>2){
+								if (target.hasSkill('sphuangen')&&target.hp>0) return 0;
+								var list=target.getFriends(true);
+								for (var i=0;i<list.length;i++){
+									if (list[i].hasSkill('sphuangen')&&list[i].hp>1) return 0;
+								}
+							}
 							let res = 0,
 								att = get.sgnAttitude(player, target);
 							res -= att * (0.8 * target.countCards("hs") + 0.6 * target.countCards("e") + 3.6);
 							return res;
 						},
 						target(player, target) {
+							for (var i = 0; i < game.players.length; i++) {
+								if (get.attitude(player, game.players[i]) <= 0 && game.players[i].hasSkill('dclaoyan')) return 0;
+							}
+							if (game.players.length>2){
+								if (target.hasSkill('sphuangen')&&target.hp>0) return 0;
+								var list=target.getFriends(true);
+								for (var i=0;i<list.length;i++){
+									if (list[i].hasSkill('sphuangen')&&list[i].hp>1) return 0;
+								}
+							}
 							return -1;
 						},
 					},
@@ -351,6 +371,16 @@ game.import("card", function () {
 					},
 					result: {
 						target(player, target) {
+							for (var i = 0; i < game.players.length; i++) {
+								if (get.attitude(player, game.players[i]) <= 0 && game.players[i].hasSkill('dclaoyan')) return 0;
+							}
+							if (game.players.length>2){
+								if (target.hasSkill('sphuangen')&&target.hp>0) return 0;
+								var list=target.getFriends(true);
+								for (var i=0;i<list.length;i++){
+									if (list[i].hasSkill('sphuangen')&&list[i].hp>1) return 0;
+								}
+							}
 							if (target.hasSkill("dctianji")) return 3 * game.players.length;
 							return -1;
 						},
@@ -392,6 +422,12 @@ game.import("card", function () {
 					},
 					result: {
 						target: (player, target) => {
+							if (game.players.length>2){
+								var list=player.getEnemies();
+								for (var i=0;i<list.length;i++){
+									if (list[i].hasSkill('sphuangen')&&list[i].hp>1) return 0;
+								}
+							}
 							if (target.hasSkillTag("link") || target.hasSkillTag("noLink")) return 0;
 							let curs = game.filterPlayer(current => {
 								if (current.hasSkillTag("noLink") || current.hasSkillTag("nodamage")) return false;

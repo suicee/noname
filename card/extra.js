@@ -350,6 +350,9 @@ game.import("card", function () {
 					},
 					result: {
 						target: (player, target) => {
+							for (var i = 0; i < game.players.length; i++) {
+								if (get.attitude(player, game.players[i]) <= 0 && game.players[i].hasSkill('dclaoyan')) return 0;
+							}
 							if (game.players.length>2){
 								var list=player.getEnemies();
 								for (var i=0;i<list.length;i++){
