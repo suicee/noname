@@ -9352,7 +9352,7 @@ const skills = {
 			event.result = yield map.player.chooseTarget(get.prompt2("dc_zj_b"), lib.filter.notMe).set("ai", target => {
 				var player = _status.event.player;
 				if (!player.hasFriend()) return 0;
-				if (get.attitude(player, target) < 0 && get.damageEffect(target, player, player) > 0) return 1;
+				if (get.attitude(player, target) < 0 && get.damageEffect(target, player, player) > 0) return 1000 - (target.hp + target.hujia + target.countCards("he"));
 				return 0;
 			});
 		},
