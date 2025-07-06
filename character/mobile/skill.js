@@ -2828,7 +2828,7 @@ const skills = {
 						if (
 							used &&
 							!game.hasPlayer(target => {
-								return !target.hasHistory("gain", evt => evt.cards.length);
+								return !target.hasHistory("gain", evt => evt.cards?.length);
 							})
 						) {
 							return;
@@ -2869,17 +2869,18 @@ const skills = {
 								black: black,
 								red: red,
 								used: used,
+								targetsx: game.filterPlayer(target=>!target.hasHistory("gain", evt => evt.cards?.length)),
 								filterButton(button) {
-									return get.event()[button.link].length;
+									return get.event()[button.link]?.length;
 								},
 								filterTarget(card, player, target) {
 									if (get.event().used) {
-										return !target.hasHistory("gain", evt => evt.cards.length);
+										return get.event().targetsx.includes(target);
 									}
 									return true;
 								},
 								ai1(button) {
-									return get.event()[button.link].length;
+									return get.event()[button.link]?.length;
 								},
 								ai2(target) {
 									if (!get.event().used && get.player() == target) {
@@ -21563,7 +21564,7 @@ const skills = {
 		},
 		async content(event, trigger, player) {
 			const result = await player
-				.gainPlayerCard(target, "e", true)
+				.gainPlayerCard(event.target, "e", true)
 				.set("ai", function (button) {
 					const card = button.link;
 					const player = _status.event.player;
@@ -21581,7 +21582,7 @@ const skills = {
 				await player.chooseUseTarget(card, true, "nopopup");
 			}
 			if (get.subtype(card, false) == "equip1") {
-				await target.damage();
+				await event.target.damage();
 			}
 		},
 		ai: {

@@ -3715,7 +3715,7 @@ game.import("card", function () {
 								return;
 							}
 							_status.zhuge_temp = card;
-							var bool = lib.filter.cardUsable(get.autoViewAs({ name: "sha" }, ui.selected.cards.concat([card])), player);
+							var bool = lib.filter.cardUsable(get.autoViewAs(cardz, ui.selected.cards.concat([card])), player);
 							delete _status.zhuge_temp;
 							if (!bool) {
 								return false;

@@ -523,7 +523,10 @@ game.import("card", function () {
 						const result = await player
 							.chooseControl("摸牌阶段", "出牌阶段")
 							.set("prompt", "躺赢：选择要执行的额外阶段")
-							.set("ai", () => (Math.random() > 0.5 ? "摸牌阶段" : "出牌阶段"))
+							.set("ai", () => {
+								const player = get.player();
+								return player.countCards("hs", card => player.hasValueTarget(card)) < 2 ? "摸牌阶段" : "出牌阶段";
+							})
 							.forResult();
 						if (result?.control) {
 							const name = result.control == "摸牌阶段" ? "phaseDraw" : "phaseUse";

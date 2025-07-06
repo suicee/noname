@@ -4528,7 +4528,7 @@ export class Library {
 				show_characternamepinyin: {
 					name: "显示武将名注解",
 					intro: "在武将资料卡显示武将名及其注解、性别、势力、体力等信息",
-					init: "showCodeIdentifier",
+					init: "showPinyin",
 					unfrequent: true,
 					item: {
 						doNotShow: "不显示",
@@ -5869,7 +5869,7 @@ export class Library {
 				},
 				auto_mark_identity: {
 					name: "自动标记身份",
-					init: false,
+					init: true,
 					intro: "根据角色的出牌行为自动标记可能的身份",
 				},
 				enhance_zhu: {
