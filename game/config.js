@@ -16,7 +16,7 @@ window.config = {
 	zhinang_tricks: ["guohe", "wuxie", "wuzhong", "dongzhuxianji"],
 	connect_zhinang_tricks: ["guohe", "wuxie", "wuzhong", "dongzhuxianji"],
 	all: {
-		sgscharacters: ["standard", "shenhua", "refresh", "yijiang", "newjiang", "sixiang","sp", "sp2", "xianding", "huicui", "extra", "old", "mobile", "shiji", "tw", "yingbian", "offline", "jsrg", "sb", "clan", "collab", "onlyOL"],
+		sgscharacters: ["standard", "shenhua", "refresh", "yijiang", "newjiang", "sixiang", "sp", "sp2", "xianding", "huicui", "extra", "old", "mobile", "shiji", "tw", "yingbian", "offline", "jsrg", "sxrm", "sb", "clan", "collab", "onlyOL"],
 		sgscards: ["standard", "extra", "sp", "guozhan", "zhulu", "yingbian", "yongjian", "yunchou"],
 		sgsmodes: ["identity", "guozhan", "versus", "doudizhu", "single", "brawl", "connect"],
 		stockmode: ["identity", "guozhan", "versus", "boss", "doudizhu", "single", "chess", "stone", "connect", "brawl", "tafang"],
@@ -72,11 +72,15 @@ window.config = {
 	recentIP: [],
 	brokenFile: [],
 
+	max_loadtime: "20000",
 	theme: "simple",
 	layout: "long2",
-	card_style: "simple",
 	cardback_style: "official",
+	cardshape: "oblong",
 	hp_style: "glass",
+	menu_style: "music",
+	player_border: "slim",
+	radius_size: "reduce",
 
 	image_character: "default",
 	image_background: "ol_bg",
@@ -113,8 +117,6 @@ window.config = {
 	button_press: true,
 	damage_shake: true,
 	log_highlight: true,
-	player_border: "normal",
-	radius_size: "default",
 
 	modeconfig: false,
 	gameconfig: false,
@@ -126,9 +128,9 @@ window.config = {
 	right_click: "pause",
 	sort: "type_sort",
 
-	cards: ["standard", "extra", "sp", "zhulu", "yingbian", "yongjian", "yunchou", "xianxia", "kaiheiji"],
-	characters: ["standard", "shenhua", "sp", "sp2", "yijiang", "newjiang", "sixiang", "refresh", "mobile", "extra", "yingbian", "sb", "tw", "offline", "clan", "collab", "xianding", "huicui", "shiji", "jsrg", "onlyOL", "old"],
-	moderned_chracters: ["standard", "shenhua", "sp", "sp2", "yijiang", "newjiang", "sixiang", "refresh", "mobile", "extra", "yingbian", "sb", "tw", "offline", "clan", "collab", "xianding", "huicui", "shiji", "onlyOL", "jsrg", "old", "diy", "ddd", "key"],
+	cards: ["standard", "extra", "sp", "zhulu", "yingbian", "yongjian", "yunchou", "xianxia", "huodong"],
+	characters: ["standard", "shenhua", "sp", "sp2", "yijiang", "newjiang", "sixiang", "refresh", "mobile", "extra", "yingbian", "sb", "tw", "offline", "clan", "collab", "xianding", "huicui", "shiji", "jsrg", "sxrm", "onlyOL", "old"],
+	moderned_chracters: ["standard", "shenhua", "sp", "sp2", "yijiang", "newjiang", "sixiang", "refresh", "mobile", "extra", "yingbian", "sb", "tw", "offline", "clan", "collab", "xianding", "huicui", "shiji", "onlyOL", "jsrg", "sxrm", "old", "diy", "ddd", "key"],
 	connect_characters: ["diy", "ddd", "key"],
 	connect_cards: ["huanlekapai", "guozhan"],
 	plays: [],

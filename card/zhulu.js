@@ -17,7 +17,9 @@ game.import("card", function () {
 					if (get.is.versus()) {
 						player
 							.chooseControl("顺时针", "逆时针", function (event, player) {
-								if (player.next.side == player.side) return "逆时针";
+								if (player.next.side == player.side) {
+									return "逆时针";
+								}
 								return "顺时针";
 							})
 							.set("prompt", "选择" + get.translation(card) + "的结算方向");
@@ -47,7 +49,9 @@ game.import("card", function () {
 						var cardx = get.cardPile(function (card) {
 							return get.type(card) == "equip" && !cards.includes(card);
 						});
-						if (cardx) cards.push(cardx);
+						if (cardx) {
+							cards.push(cardx);
+						}
 					}
 					if (!cards.length) {
 						event.finish();
@@ -86,7 +90,9 @@ game.import("card", function () {
 					var equips = [];
 					for (var i = 0; i < event.dialog.buttons.length; i++) {
 						var card = event.dialog.buttons[i].link;
-						if (target.canEquip(card, true)) equips.push(card);
+						if (target.canEquip(card, true)) {
+							equips.push(card);
+						}
 					}
 					if (equips.length > 1) {
 						var next = target.chooseButton(true, function (button) {
@@ -102,7 +108,9 @@ game.import("card", function () {
 						next.set("dialogdisplay", true);
 					} else if (equips.length) {
 						event.directButton = equips[0];
-					} else event.finish();
+					} else {
+						event.finish();
+					}
 					"step 1";
 					var dialog = event.dialog;
 					var card;
@@ -116,9 +124,13 @@ game.import("card", function () {
 						if (dialog.buttons[i].link == card) {
 							button = dialog.buttons[i];
 							button.querySelector(".info").innerHTML = (function (target) {
-								if (target._tempTranslate) return target._tempTranslate;
+								if (target._tempTranslate) {
+									return target._tempTranslate;
+								}
 								var name = target.name;
-								if (lib.translate[name + "_ab"]) return lib.translate[name + "_ab"];
+								if (lib.translate[name + "_ab"]) {
+									return lib.translate[name + "_ab"];
+								}
 								return get.translation(name);
 							})(target);
 							dialog.buttons.remove(button);
@@ -146,9 +158,13 @@ game.import("card", function () {
 							card,
 							dialog.videoId,
 							(function (target) {
-								if (target._tempTranslate) return target._tempTranslate;
+								if (target._tempTranslate) {
+									return target._tempTranslate;
+								}
 								var name = target.name;
-								if (lib.translate[name + "_ab"]) return lib.translate[name + "_ab"];
+								if (lib.translate[name + "_ab"]) {
+									return lib.translate[name + "_ab"];
+								}
 								return get.translation(name);
 							})(target),
 							capt
@@ -179,7 +195,9 @@ game.import("card", function () {
 				},
 				ai: {
 					wuxie() {
-						if (Math.random() < 0.5) return 0;
+						if (Math.random() < 0.5) {
+							return 0;
+						}
 					},
 					basic: {
 						order: 3,
@@ -197,7 +215,9 @@ game.import("card", function () {
 								}
 							}
 							if (get.is.versus()) {
-								if (target == player) return 1.5;
+								if (target == player) {
+									return 1.5;
+								}
 								return 1;
 							}
 							if (player.hasUnknown(2)) {
@@ -229,7 +249,9 @@ game.import("card", function () {
 						return;
 					}
 					target.chooseToDiscard(true, "he", [1, 2]).set("ai", function (card) {
-						if (!ui.selected.cards.length && get.type(card) == "equip") return 8 - get.value(card);
+						if (!ui.selected.cards.length && get.type(card) == "equip") {
+							return 8 - get.value(card);
+						}
 						return 6 - get.value(card);
 					});
 					"step 1";
@@ -265,20 +287,33 @@ game.import("card", function () {
 							}
 							var cards = ui.selected.cards.concat(card.cards || []);
 							var num = player.countCards("he", function (card) {
-								if (cards.includes(card)) return false;
-								if (get.type(card) == "equip") return 8 > get.value(card);
+								if (cards.includes(card)) {
+									return false;
+								}
+								if (get.type(card) == "equip") {
+									return 8 > get.value(card);
+								}
 								return 6 > get.value(card);
 							});
-							if (!num) return 0;
+							if (!num) {
+								return 0;
+							}
 							if (
 								player.countCards("he", function (card) {
-									if (cards.includes(card)) return false;
-									if (get.type(card) == "equip") return 4 > get.value(card);
+									if (cards.includes(card)) {
+										return false;
+									}
+									if (get.type(card) == "equip") {
+										return 4 > get.value(card);
+									}
 									return false;
 								})
-							)
+							) {
 								return 1.6;
-							if (num < 2) return 0.5;
+							}
+							if (num < 2) {
+								return 0.5;
+							}
 							return 1.2;
 						},
 					},
@@ -298,7 +333,9 @@ game.import("card", function () {
 				},
 				content() {
 					var es = target.getCards("e");
-					if (es.length) target.gain(es, "gain2", "log");
+					if (es.length) {
+						target.gain(es, "gain2", "log");
+					}
 				},
 				ai: {
 					order: 10,
@@ -353,7 +390,9 @@ game.import("card", function () {
 					next.player = player;
 					next.setContent(function () {
 						var cards = event.getParent().cards.filterInD();
-						if (cards.length) player.gain(cards, "gain2", "log");
+						if (cards.length) {
+							player.gain(cards, "gain2", "log");
+						}
 					});
 				},
 				ai: {
@@ -372,7 +411,9 @@ game.import("card", function () {
 				type: "equip",
 				subtype: "equip4",
 				filterTarget(card, player, target) {
-					if (player == target) return false;
+					if (player == target) {
+						return false;
+					}
 					return target.canEquip(card, true);
 				},
 				selectTarget: 1,
@@ -423,14 +464,17 @@ game.import("card", function () {
 					equipValue(card, player) {
 						var skills = ["longdan", "kanpo", "rekanpo", "qingguo", "reqingguo", "ollongdan", "refanghun"];
 						for (var i = 0; i < skills.length; i++) {
-							if (player.hasSkill(skills[i])) return 5;
+							if (player.hasSkill(skills[i])) {
+								return 5;
+							}
 						}
 						if (
 							player.countCards("h", function (card) {
 								return get.color(card) == "black" && ["wuxie", "caochuan"].includes(card);
 							})
-						)
+						) {
 							return 5;
+						}
 						return 2;
 					},
 					basic: {
@@ -443,7 +487,9 @@ game.import("card", function () {
 				type: "equip",
 				subtype: "equip1",
 				filterTarget(card, player, target) {
-					if (player == target) return false;
+					if (player == target) {
+						return false;
+					}
 					return target.canEquip(card, true);
 				},
 				selectTarget: 1,
@@ -485,7 +531,9 @@ game.import("card", function () {
 				type: "equip",
 				subtype: "equip1",
 				filterTarget(card, player, target) {
-					if (player == target) return false;
+					if (player == target) {
+						return false;
+					}
 					return target.canEquip(card, true);
 				},
 				selectTarget: 1,
@@ -511,7 +559,7 @@ game.import("card", function () {
 							var val=2.5;
 							var cards=target.getEquips(1);
 							for (var card of cards){
-								if( card&&get.equipValue(card)<=0) return 0;
+								if (card&&get.equipValue(card)<=0) return 0;
 								if (card) val+=get.equipValue(card);
 							}
 							return -val;
@@ -524,7 +572,9 @@ game.import("card", function () {
 				type: "equip",
 				subtype: "equip2",
 				filterTarget(card, player, target) {
-					if (player == target) return false;
+					if (player == target) {
+						return false;
+					}
 					return target.canEquip(card, true);
 				},
 				selectTarget: 1,
@@ -563,7 +613,9 @@ game.import("card", function () {
 				type: "equip",
 				subtype: "equip2",
 				filterTarget(card, player, target) {
-					if (player == target) return false;
+					if (player == target) {
+						return false;
+					}
 					return target.canEquip(card, true);
 				},
 				selectTarget: 1,
@@ -575,7 +627,7 @@ game.import("card", function () {
 						player.countCards("he", function (cardx) {
 							return card.cards && !card.cards.includes(cardx);
 						})
-					)
+					) {
 						player
 							.chooseToDiscard(
 								true,
@@ -585,13 +637,18 @@ game.import("card", function () {
 								"he"
 							)
 							.set("card", card);
+					}
 				},
 				onLose() {
-					if (player.sex != "male") return;
+					if (player.sex != "male") {
+						return;
+					}
 					var next = game.createEvent("nvzhuang_lose");
 					event.next.remove(next);
 					var evt = event.getParent();
-					if (evt.getlx === false) evt = evt.getParent();
+					if (evt.getlx === false) {
+						evt = evt.getParent();
+					}
 					evt.after.push(next);
 					next.player = player;
 					next.setContent(function () {
@@ -654,7 +711,9 @@ game.import("card", function () {
 				type: "equip",
 				subtype: "equip5",
 				filterTarget(card, player, target) {
-					if (player == target) return false;
+					if (player == target) {
+						return false;
+					}
 					return target.canEquip(card, true);
 				},
 				selectTarget: 1,
@@ -665,15 +724,18 @@ game.import("card", function () {
 				onEquip() {
 					"step 0";
 					player.markSkill("jinhe_skill");
-					if (event.getParent(2).name != "jinhe") event.finish();
-					else {
+					if (event.getParent(2).name != "jinhe") {
+						event.finish();
+					} else {
 						event.target = player;
 						event.player = event.getParent(2).player;
 					}
 					"step 1";
 					var id = card.cardid;
 					event.cardid = id;
-					if (!_status.jinhe) _status.jinhe = {};
+					if (!_status.jinhe) {
+						_status.jinhe = {};
+					}
 					if (_status.jinhe[id]) {
 						game.cardsDiscard(_status.jinhe[id].card);
 						delete _status.jinhe[id];
@@ -728,7 +790,9 @@ game.import("card", function () {
 					result: {
 						keepAI: true,
 						target(player, target, cardx) {
-							if (_status.jinhe && _status.jinhe[cardx.cardid]) return -0.5 - 2 * target.countCards("h");
+							if (_status.jinhe && _status.jinhe[cardx.cardid]) {
+								return -0.5 - 2 * target.countCards("h");
+							}
 							var cards=target.getEquips(5);
 							for (var card of cards){
 								if (!card) return 0;
@@ -752,12 +816,20 @@ game.import("card", function () {
 				equipSkill: true,
 				forced: true,
 				filter(event, player) {
-					if (event.getl === false) return false;
-					if (!event.getd(player).length || !_status.jinhe || (event.getParent(2).name == "jinhe_skill" && event.getParent(2).player == player)) return false;
+					if (event.getl === false) {
+						return false;
+					}
+					if (!event.getd(player).length || !_status.jinhe || (event.getParent(2).name == "jinhe_skill" && event.getParent(2).player == player)) {
+						return false;
+					}
 					var evt = event.getl(player);
-					if (!evt) return false;
+					if (!evt) {
+						return false;
+					}
 					for (var i = 0; i < evt.es.length; i++) {
-						if (evt.es[i].name == "jinhe" && _status.jinhe[evt.es[i].cardid]) return true;
+						if (evt.es[i].name == "jinhe" && _status.jinhe[evt.es[i].cardid]) {
+							return true;
+						}
 					}
 					return false;
 				},
@@ -777,8 +849,10 @@ game.import("card", function () {
 						_status.jinhe = jinhe;
 					}, _status.jinhe);
 					"step 1";
-					var hs = player.getCards("h");
-					if (hs.length) player.discard(hs);
+					let hs = player.getDiscardableCards(player, "h");
+					if (hs.length) {
+						player.discard(hs);
+					}
 					"step 2";
 					game.broadcastAll(ui.clear);
 				},
@@ -789,16 +863,23 @@ game.import("card", function () {
 					mark(dialog, storage, player) {
 						var card = player.getEquip("jinhe");
 						if (card && _status.jinhe && _status.jinhe[card.cardid]) {
-							if (_status.jinhe[card.cardid].player == game.me || _status.jinhe[card.cardid].player.isUnderControl()) dialog.addAuto([_status.jinhe[card.cardid].card]);
-							else return "共有一张「礼」";
-						} else return "没有牌";
+							if (_status.jinhe[card.cardid].player == game.me || _status.jinhe[card.cardid].player.isUnderControl()) {
+								dialog.addAuto([_status.jinhe[card.cardid].card]);
+							} else {
+								return "共有一张「礼」";
+							}
+						} else {
+							return "没有牌";
+						}
 					},
 				},
 				mark: true,
 				marktext: "礼",
 				enable: "phaseUse",
 				filter(event, player) {
-					if (!_status.jinhe) return false;
+					if (!_status.jinhe) {
+						return false;
+					}
 					var card = player.getEquip("jinhe");
 					return card && card.name == "jinhe" && _status.jinhe[card.cardid] != undefined;
 				},
@@ -820,13 +901,19 @@ game.import("card", function () {
 						game.broadcastAll(function (jinhe) {
 							_status.jinhe = jinhe;
 						}, _status.jinhe);
-					} else event.finish();
+					} else {
+						event.finish();
+					}
 					"step 1";
 					var cards = player.getCards("he", function (card) {
-						if (get.position(card) == "h") return get.suit(card) == event.suit;
+						if (get.position(card) == "h") {
+							return get.suit(card) == event.suit;
+						}
 						return get.position(card) == "e" && card.name == "jinhe";
 					});
-					if (cards.length) player.discard(cards);
+					if (cards.length) {
+						player.discard(cards);
+					}
 					"step 2";
 					game.broadcastAll(ui.clear);
 				},
@@ -862,7 +949,9 @@ game.import("card", function () {
 							})
 						) {
 							const cards = player.getEquips("yexingyi");
-							if (player.hasSkill("yexingyi_skill", null, false) || !card.cards || !cards.some(cardx => card.cards.includes(cardx) || ui.selected.cards.includes(cardx))) return false;
+							if (player.hasSkill("yexingyi_skill", null, false) || !card.cards || !cards.some(cardx => card.cards.includes(cardx) || ui.selected.cards.includes(cardx))) {
+								return false;
+							}
 						}
 					},
 				},
@@ -872,8 +961,12 @@ game.import("card", function () {
 				forced: true,
 				equipSkill: true,
 				filter(event, player) {
-					if (get.type(event.card, "trick") != "trick") return false;
-					if (player.hasSkillTag("unequip2")) return false;
+					if (get.type(event.card, "trick") != "trick") {
+						return false;
+					}
+					if (player.hasSkillTag("unequip2")) {
+						return false;
+					}
 					if (
 						event.source &&
 						event.source.hasSkillTag("unequip", false, {
@@ -881,8 +974,9 @@ game.import("card", function () {
 							target: player,
 							card: event.card,
 						})
-					)
+					) {
 						return false;
+					}
 					return true;
 				},
 				content() {
@@ -903,14 +997,18 @@ game.import("card", function () {
 				trigger: { player: "useCard" },
 				forced: true,
 				filter(event, player) {
-					if (event.card.name != "sha") return false;
+					if (event.card.name != "sha") {
+						return false;
+					}
 					var cards = player.getEquips("wufengjian");
 					return player.hasCard(function (card) {
 						return !cards.includes(card);
 					}, "he");
 				},
 				content() {
-					if (player != game.me && !player.isUnderControl() && !player.isOnline()) game.delayx();
+					if (player != game.me && !player.isUnderControl() && !player.isOnline()) {
+						game.delayx();
+					}
 					player
 						.chooseToDiscard(true, "he", function (card) {
 							return !_status.event.cards?.includes(card);
@@ -922,7 +1020,9 @@ game.import("card", function () {
 				equipSkill: true,
 				trigger: { player: "useCardAfter" },
 				filter(event, player) {
-					if (_status.currentPhase == player || get.color(event.card) != "black" || event.cards.filterInD().length == 0) return false;
+					if (_status.currentPhase == player || get.color(event.card) != "black" || event.cards.filterInD().length == 0) {
+						return false;
+					}
 					return (
 						player
 							.getHistory("useCard", function (evt) {
@@ -943,14 +1043,18 @@ game.import("card", function () {
 				forced: true,
 				priority: 6,
 				filter(event, player) {
-					if (event.directHit || !get.tag(event.card, "damage") || !["basic", "trick"].includes(get.type(event.card))) return false;
+					if (event.directHit || !get.tag(event.card, "damage") || !["basic", "trick"].includes(get.type(event.card))) {
+						return false;
+					}
 					return player.hasUsableCard("caochuan");
 				},
 				content() {
 					var next = player.chooseToUse();
 					next.set("prompt", "是否使用【草船借箭】响应" + get.translation(trigger.player) + "使用的" + get.translation(trigger.card) + "？");
 					next.set("filterCard", function (card, player) {
-						if (get.name(card) != "caochuan") return false;
+						if (get.name(card) != "caochuan") {
+							return false;
+						}
 						return lib.filter.cardEnabled(card, player, "forceEnable");
 					});
 					next.set("respondTo", [trigger.player, trigger.card]);
