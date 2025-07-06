@@ -1832,7 +1832,7 @@ export class Library {
 				ui_zoom: {
 					name: "界面缩放",
 					intro: "填入50~300以内的整数作为界面缩放比例（系统会转换为对应缩放百分比）",
-					init: "120%",
+					init: "100%",
 					input: true,
 					restart: true,
 					onblur(e) {

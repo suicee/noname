@@ -78,9 +78,10 @@ window.config = {
 	cardback_style: "official",
 	cardshape: "oblong",
 	hp_style: "glass",
-	menu_style: "music",
+	menu_style: "simple",
 	player_border: "slim",
 	radius_size: "reduce",
+	ui_zoom:"120%",
 
 	image_character: "default",
 	image_background: "ol_bg",
