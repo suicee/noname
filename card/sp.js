@@ -187,9 +187,6 @@ game.import("card", function () {
 				async effect(event, trigger, player, result) {
 					const { card } = event;
 					if (result.bool == false) {
-						if (cards && cards.length > 0) {
-							var card = cards[0];
-						}
 						if (card) {
 							if (typeof card.storage.fulei != "number") {
 								card.storage.fulei = 1;

@@ -328,6 +328,19 @@ game.import("card", function () {
 					value: 6.5,
 					result: {
 						player: 1,
+						player(player, target) {
+							for (var i = 0; i < game.players.length; i++) {
+								if (get.attitude(player, game.players[i]) <= 0 && game.players[i].hasSkill('dclaoyan')) return 0;
+							}
+							if (game.players.length>2){
+								if (target.hasSkill('sphuangen')&&target.hp>0) return 0;
+								var list=target.getFriends(true);
+								for (var i=0;i<list.length;i++){
+									if (list[i].hasSkill('sphuangen')&&list[i].hp>1) return 0;
+								}
+							}
+							return 1;
+						},
 					},
 					tag: {
 						multitarget: 1,
@@ -1047,12 +1060,32 @@ game.import("card", function () {
 					},
 					result: {
 						player(player, target) {
+							for (var i = 0; i < game.players.length; i++) {
+								if (get.attitude(player, game.players[i]) <= 0 && game.players[i].hasSkill('dclaoyan')) return 0;
+							}
+							if (game.players.length>2){
+								if (target.hasSkill('sphuangen')&&target.hp>0) return 0;
+								var list=target.getFriends(true);
+								for (var i=0;i<list.length;i++){
+									if (list[i].hasSkill('sphuangen')&&list[i].hp>1) return 0;
+								}
+							}
 							let res = 0,
 								att = get.sgnAttitude(player, target);
 							res -= att * (0.8 * target.countCards("hs") + 0.6 * target.countCards("e") + 3.6);
 							return res;
 						},
 						target(player, target) {
+							for (var i = 0; i < game.players.length; i++) {
+								if (get.attitude(player, game.players[i]) <= 0 && game.players[i].hasSkill('dclaoyan')) return 0;
+							}
+							if (game.players.length>2){
+								if (target.hasSkill('sphuangen')&&target.hp>0) return 0;
+								var list=target.getFriends(true);
+								for (var i=0;i<list.length;i++){
+									if (list[i].hasSkill('sphuangen')&&list[i].hp>1) return 0;
+								}
+							}
 							return -1;
 						},
 					},
@@ -1241,6 +1274,17 @@ game.import("card", function () {
 					},
 					result: {
 						target(player, target) {
+							for (var i = 0; i < game.players.length; i++) {
+								if (get.attitude(player, game.players[i]) <= 0 && game.players[i].hasSkill('dclaoyan')) return 0;
+							}
+							if (game.players.length>2){
+								if (target.hasSkill('sphuangen')&&target.hp>0) return 0;
+								var list=target.getFriends(true);
+								for (var i=0;i<list.length;i++){
+									if (list[i].hasSkill('sphuangen')&&list[i].hp>1) return 0;
+								}
+							}
+							if (target.hasSkill("dctianji")) return 3 * game.players.length;
 							return -1;
 						},
 					},
@@ -1287,6 +1331,12 @@ game.import("card", function () {
 					},
 					result: {
 						target: (player, target) => {
+							if (game.players.length>2){
+								var list=player.getEnemies();
+								for (var i=0;i<list.length;i++){
+									if (list[i].hasSkill('sphuangen')&&list[i].hp>1) return 0;
+								}
+							}
 							if (target.hasSkillTag("link") || target.hasSkillTag("noLink")) {
 								return 0;
 							}
@@ -1741,7 +1791,7 @@ game.import("card", function () {
 			youfu_bg: "福",
 			get youfu_info() {
 				const str = get.mode() == "versus" && _status.mode == "two" ? "一名队友" : "一名其他角色";
-				return `出牌阶段，对${str}使用，令你此阶段对自己使用基本牌和普通锦囊牌时，可以额外指定其为目标`;
+				return `出牌阶段，对${str}使用，令你此阶段对自己使用基本牌和普通锦囊牌时，可以额外指定其为目标。`;
 			},
 			fugui: "富贵",
 			fugui_bg: "富",
@@ -1762,7 +1812,7 @@ game.import("card", function () {
 			guilai_bg: "归",
 			get guilai_info() {
 				const str = get.mode() == "versus" && _status.mode == "two" ? "一名队友" : "一名其他角色";
-				return `出牌阶段，令${str}复活`;
+				return `出牌阶段，令${str}复活。`;
 			},
 			khquanjiux: "劝酒",
 			khquanjiux_tag: "劝酒",

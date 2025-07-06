@@ -6503,16 +6503,18 @@ player.removeVirtualEquip(card);
 				} else {
 					event.compareName = event.parent.name;
 				}
-				game.broadcastAll(function(player, target, eventName){
-					var dialog = decadeUI.create.compareDialog();
-					dialog.caption = get.translation(eventName) + '拼点';
-					dialog.player = player;
-					dialog.target = target;
-					dialog.open();
-		
-					decadeUI.delay(400);
-					ui.dialogs[eventName] = dialog;
-				}, player, target, event.compareName);
+				if (!event.isDelay) {
+					game.broadcastAll(function(player, target, eventName){
+						var dialog = decadeUI.create.compareDialog();
+						dialog.caption = get.translation(eventName) + '拼点';
+						dialog.player = player;
+						dialog.target = target;
+						dialog.open();
+			
+						decadeUI.delay(400);
+						ui.dialogs[eventName] = dialog;
+					}, player, target, event.compareName);
+				}
 			}
 			if (!event.filterCard) {
 				event.filterCard = lib.filter.all;
@@ -6549,7 +6551,7 @@ player.removeVirtualEquip(card);
 				lose_list.push([player, result[0].cards]);
 			}
 			event.card1 = lose_list[0][1][0];
-			if (window.decadeUI) {
+			if (window.decadeUI && !event.isDelay) {
 				game.broadcastAll(function(eventName){
 					var dialog = ui.dialogs[eventName];
 					dialog.$playerCard.classList.add('infohidden');
@@ -6567,7 +6569,7 @@ player.removeVirtualEquip(card);
 				lose_list.push([target, [event.fixedResult[target.playerid]]]);
 			}
 			event.card2 = lose_list[1][1][0];
-			if (window.decadeUI) {
+			if (window.decadeUI && !event.isDelay) {
 				game.broadcastAll(function(eventName){
 					var dialog = ui.dialogs[eventName];
 					dialog.$targetCard.classList.add('infohidden');
@@ -6766,10 +6768,16 @@ player.removeVirtualEquip(card);
 			player.$compare(event.card1, target, event.card2);
 		} else {
 			game.broadcastAll(function(eventName, player, target, playerCard, targetCard){
-				var dialog = ui.dialogs[eventName];
+				var dialog = decadeUI.create.compareDialog();
+				dialog.caption = get.translation(eventName) + '拼点';
+				dialog.player = player;
+				dialog.target = target;
+				dialog.open();
+				decadeUI.delay(400);
+				ui.dialogs[eventName] = dialog;
 				dialog.playerCard = playerCard.copy();
 				dialog.targetCard = targetCard.copy();
-			}, event.compareName, player, target, event.card1, event.card2);
+			}, evt.compareName, player, target, event.card1, event.card2);
 		}
 		game.log(player, "的拼点牌为", event.card1);
 		game.log(target, "的拼点牌为", event.card2);
@@ -6836,7 +6844,7 @@ player.removeVirtualEquip(card);
 
 				}, 1400, dialog, eventName);
 
-			}, str, event.compareName, event.result.bool);
+			}, str, evt.compareName, event.result.bool);
 			decadeUI.delay(1800);
 		}
 		if (typeof target.ai.shown == "number" && target.ai.shown <= 0.85 && event.addToAI) {

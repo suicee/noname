@@ -2949,8 +2949,7 @@ export default () => {
 						event.list = list;
 						if (list.length == 0) {
 							event.goto(4);
-						}
-						// else if (list.length == 1) {
+						//} else if (list.length == 1) {
 						//	event._result = { index: 0 };
 						} else {
 							player
