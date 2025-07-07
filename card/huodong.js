@@ -327,7 +327,6 @@ game.import("card", function () {
 					useful: 1.5,
 					value: 6.5,
 					result: {
-						player: 1,
 						player(player, target) {
 							for (var i = 0; i < game.players.length; i++) {
 								if (get.attitude(player, game.players[i]) <= 0 && game.players[i].hasSkill('dclaoyan')) return 0;

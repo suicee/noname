@@ -11850,6 +11850,10 @@ player.removeVirtualEquip(card);
 				cardj = get.cards()[0];
 			}
 		}
+		if (!cardj) {
+			event.finish();
+			return;
+		}
 		var owner = get.owner(cardj);
 		if (owner) {
 			owner.lose(cardj, "visible", ui.ordering);
