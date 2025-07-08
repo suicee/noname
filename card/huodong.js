@@ -289,7 +289,17 @@ game.import("card", function () {
 						const result = await player
 							.chooseControl("弃置牌", "使用牌")
 							.set("prompt", `神兵：令目标弃置装备区所有牌或依次使用牌堆不用副类型的装备牌各一张。`)
-							.set("ai", () => (Math.random() > 0.5 ? "弃置牌" : "使用牌"))
+							.set("ai", () => {
+								const player = get.player();
+								let discard_result = 0;
+								for (var i = 0; i < game.players.length; i++) {
+									let equips = game.players[i].getCards("e");
+									for (var j = 0; j < equips.length; j++){
+										if (lib.filter.cardDiscardable(equips[j], game.players[i])) discard_result += get.equipValue(equips[j]) * get.attitude(player, game.players[i]);
+									}
+								}
+								return discard_result <= 0 ? "弃置牌" : "使用牌";
+							})
 							.forResult();
 						if (result?.control) {
 							evt.shenbing = result.control == "弃置牌" ? "discard" : "useCard";
@@ -748,7 +758,36 @@ game.import("card", function () {
 					useful: 3,
 					value: 7.5,
 					result: {
-						player: 1,
+						player(player) {
+							if (player.countCards("h") - 1 == 0) {
+								return 0;
+							}
+							let players = game.filterPlayer().sortBySeat();
+							let has_enemy = false;
+							let num = 0;
+							for (var i = 0; i < players.length; i++) {
+								if (get.attitude(player, players[i]) <= 0) {
+									has_enemy = true;
+									break;
+								}
+							}
+							if (!has_enemy) {
+								return 0;
+							}
+							for (var i = 0; i < players.length; i++) {
+								let att = get.attitude(player, players[i]);
+								let hs = players[i].countCards("h");
+								if (att > 0 && hs == 0) {
+									return 0;
+								}
+								if (hs === 0) {
+									num += att / players[i].hp;
+								} else {
+									num += att / (2 * hs) / players[i].hp;
+								}
+							}
+							return -num;
+						},
 					},
 					tag: {
 						damage: 0.2,
@@ -843,7 +882,19 @@ game.import("card", function () {
 					useful: 5.5,
 					value: 10,
 					result: {
-						player: 1,
+						player(player) {
+							let has_enemy = false;
+							for (var i = 0; i < game.players.length; i++) {
+								if (get.attitude(player, game.players[i]) <= 0) {
+									has_enemy = true;
+									break;
+								}
+							}
+							if (!has_enemy) {
+								return 0;
+							}
+							return 1;
+						},
 					},
 					tag: {
 						//damage: 0.5,
