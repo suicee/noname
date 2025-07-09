@@ -17,7 +17,8 @@ window.config = {
 	connect_zhinang_tricks: ["guohe", "wuxie", "wuzhong", "dongzhuxianji"],
 	all: {
 		sgscharacters: ["standard", "shenhua", "refresh", "yijiang", "newjiang", "sixiang", "sp", "sp2", "xianding", "huicui", "extra", "old", "mobile", "shiji", "tw", "yingbian", "offline", "jsrg", "sxrm", "sb", "clan", "collab", "onlyOL"],
-		sgscards: ["standard", "extra", "sp", "guozhan", "zhulu", "yingbian", "yongjian", "yunchou"],
+		// sgscards: ["standard", "extra", "sp", "guozhan", "zhulu", "yingbian", "yongjian", "yunchou"],
+		sgscards: ["standard", "extra", "sp", "guozhan"],
 		sgsmodes: ["identity", "guozhan", "versus", "doudizhu", "single", "brawl", "connect"],
 		stockmode: ["identity", "guozhan", "versus", "boss", "doudizhu", "single", "chess", "stone", "connect", "brawl", "tafang"],
 		stockextension: ["boss", "cardpile", "coin", "wuxing"],

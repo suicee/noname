@@ -5516,7 +5516,7 @@ export class Library {
 				},
 				connect_enable_commoner: {
 					name: "启用平民",
-					init: true,
+					init: false,
 					restart: true,
 					frequent: false,
 					get intro() {
@@ -5548,7 +5548,7 @@ export class Library {
 				},
 				connect_change_card: {
 					name: "启用手气卡",
-					init: false,
+					init: true,
 					frequent: true,
 					restart: true,
 				},
@@ -5561,7 +5561,7 @@ export class Library {
 				},
 				connect_enable_year_limit: {
 					name: "启用年机制",
-					init: true,
+					init: false,
 					restart: true,
 					frequent: false,
 					get intro() {
@@ -5901,7 +5901,7 @@ export class Library {
 				},
 				change_identity: {
 					name: "自由选择身份和座位",
-					init: true,
+					init: false,
 					onclick(bool) {
 						game.saveConfig("change_identity", bool, this._link.config.mode);
 						if (get.mode() != "identity" || (!_status.event.getParent().showConfig && !_status.event.showConfig)) {
