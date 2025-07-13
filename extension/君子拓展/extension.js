@@ -635,12 +635,12 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
                             for (var i = 0; i < cards.length; i++) {
                                 var index = Math.floor(Math.random() * 6);
                                 switch (index) {
-                                    case 0: new_cards.push(lib.card.dian.getDian(1)[0]); break;
-                                    case 1: new_cards.push(lib.card.xiao.getXiao(1)[0]); break;
-                                    case 2: new_cards.push(lib.card.ji.getJi(1)[0]); break;
-                                    case 3: new_cards.push(lib.card.le.getLe(1)[0]); break;
-                                    case 4: new_cards.push(lib.card.beng.getBeng(1)[0]); break;
-                                    case 5: new_cards.push(lib.card.junzi_ying.getJunzi_Ying(1)[0]); break;
+                                    case 0: new_cards.push(lib.card.dian.getDian(1,cards[i].suit,cards[i].number)[0]); break;
+                                    case 1: new_cards.push(lib.card.xiao.getXiao(1,cards[i].suit,cards[i].number)[0]); break;
+                                    case 2: new_cards.push(lib.card.ji.getJi(1,cards[i].suit,cards[i].number)[0]); break;
+                                    case 3: new_cards.push(lib.card.le.getLe(1,cards[i].suit,cards[i].number)[0]); break;
+                                    case 4: new_cards.push(lib.card.beng.getBeng(1,cards[i].suit,cards[i].number)[0]); break;
+                                    case 5: new_cards.push(lib.card.junzi_ying.getJunzi_Ying(1,cards[i].suit,cards[i].number)[0]); break;
 
                                 }
                             }
