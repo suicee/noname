@@ -1,6 +1,6 @@
 game.import("extension", function (lib, game, ui, get, ai, _status) {
     return {
-        name: "君子", content: function (config, pack) {
+        name: "君子拓展", content: function (config, pack) {
 
         }, precontent: function () {
 
@@ -26,11 +26,11 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
                         type: "basic",
                         enable: false,
                         destroy: "discardPile",
-                        getDian: function (count) {
+                        getDian: function (count,suit, number) {
                             var cards = [];
                             if (typeof count != 'number') count = 1;
                             while (count--) {
-                                let card = game.createCard('dian')//, 'spade', 1);
+                                let card = game.createCard('dian', suit, number);
                                 cards.push(card);
                             }
                             return cards;
@@ -48,11 +48,11 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
                         type: "basic",
                         enable: false,
                         destroy: "discardPile",
-                        getXiao: function (count) {
+                        getXiao: function (count,suit, number) {
                             var cards = [];
                             if (typeof count != 'number') count = 1;
                             while (count--) {
-                                let card = game.createCard('xiao');
+                                let card = game.createCard('xiao', suit, number);
                                 cards.push(card);
                             }
                             return cards;
@@ -70,11 +70,11 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
                         type: "basic",
                         enable: false,
                         destroy: "discardPile",
-                        getJi: function (count) {
+                        getJi: function (count,suit, number) {
                             var cards = [];
                             if (typeof count != 'number') count = 1;
                             while (count--) {
-                                let card = game.createCard('ji');
+                                let card = game.createCard('ji', suit, number);
                                 cards.push(card);
                             }
                             return cards;
@@ -92,11 +92,11 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
                         type: "basic",
                         enable: false,
                         destroy: "discardPile",
-                        getLe: function (count) {
+                        getLe: function (count,suit, number) {
                             var cards = [];
                             if (typeof count != 'number') count = 1;
                             while (count--) {
-                                let card = game.createCard('le');
+                                let card = game.createCard('le', suit, number);
                                 cards.push(card);
                             }
                             return cards;
@@ -114,11 +114,11 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
                         type: "basic",
                         enable: false,
                         destroy: "discardPile",
-                        getBeng: function (count) {
+                        getBeng: function (count,suit, number) {
                             var cards = [];
                             if (typeof count != 'number') count = 1;
                             while (count--) {
-                                let card = game.createCard('beng');
+                                let card = game.createCard('beng', suit, number);
                                 cards.push(card);
                             }
                             return cards;
@@ -136,11 +136,11 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
                         type: "basic",
                         enable: false,
                         destroy: "discardPile",
-                        "getJunzi_Ying": function (count) {
+                        "getJunzi_Ying": function (count,suit, number) {
                             var cards = [];
                             if (typeof count != 'number') count = 1;
                             while (count--) {
-                                let card = game.createCard('junzi_ying');
+                                let card = game.createCard('junzi_ying', suit, number);
                                 cards.push(card);
                             }
                             return cards;
@@ -591,12 +591,12 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
                             for (var i = 0; i < cards.length; i++) {
                                 var index = Math.floor(Math.random() * 6);
                                 switch (index) {
-                                    case 0: new_cards.push(lib.card.dian.getDian(1)[0]); break;
-                                    case 1: new_cards.push(lib.card.xiao.getXiao(1)[0]); break;
-                                    case 2: new_cards.push(lib.card.ji.getJi(1)[0]); break;
-                                    case 3: new_cards.push(lib.card.le.getLe(1)[0]); break;
-                                    case 4: new_cards.push(lib.card.beng.getBeng(1)[0]); break;
-                                    case 5: new_cards.push(lib.card.junzi_ying.getJunzi_Ying(1)[0]); break;
+                                    case 0: new_cards.push(lib.card.dian.getDian(1,cards[i].suit,cards[i].number)[0]); break;
+                                    case 1: new_cards.push(lib.card.xiao.getXiao(1,cards[i].suit,cards[i].number)[0]); break;
+                                    case 2: new_cards.push(lib.card.ji.getJi(1,cards[i].suit,cards[i].number)[0]); break;
+                                    case 3: new_cards.push(lib.card.le.getLe(1,cards[i].suit,cards[i].number)[0]); break;
+                                    case 4: new_cards.push(lib.card.beng.getBeng(1,cards[i].suit,cards[i].number)[0]); break;
+                                    case 5: new_cards.push(lib.card.junzi_ying.getJunzi_Ying(1,cards[i].suit,cards[i].number)[0]); break;
 
                                 }
                             }

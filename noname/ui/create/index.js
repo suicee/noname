@@ -2963,7 +2963,7 @@ export class Create {
 			['挑战卡牌', true],
 			['MVP扩展', true],
 			['补应变卡', true],
-			['君子', true],
+			['君子拓展', true],
 		];
 		var need_reload=false;
 		for(var i=0;i<addtional_extention_names.length;i++){
